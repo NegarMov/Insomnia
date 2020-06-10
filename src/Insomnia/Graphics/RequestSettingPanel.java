@@ -40,7 +40,7 @@ public class RequestSettingPanel extends JPanel {
     public RequestSettingPanel(MainWindow mainWindow) {
         setBackground(Color.LIGHT_GRAY);
         setLayout(new BorderLayout());
-        setPreferredSize(new Dimension(400, 700));
+        setPreferredSize(new Dimension(380, 700));
         this.mainWindow = mainWindow;
         initiateSendPanel();
         add(sendPanel, BorderLayout.NORTH);
@@ -68,11 +68,13 @@ public class RequestSettingPanel extends JPanel {
             setFontAndColor(tab, headerPanel, queryPanel, bodyPanel, binaryUploadPanel, formDataPanel);
             headerPanel.setTheme();
             queryPanel.setTheme();
+            formDataPanel.setTheme();
         }
         else {
             setFontAndColor(tab, headerPanel, queryPanel, bodyPanel, binaryUploadPanel, formDataPanel);
             headerPanel.setTheme();
             queryPanel.setTheme();
+            formDataPanel.setTheme();
         }
     }
 

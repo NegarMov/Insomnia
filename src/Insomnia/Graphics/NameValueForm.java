@@ -126,10 +126,13 @@ public class NameValueForm extends JPanel {
     public HashMap<String, String> getPairs() {
         HashMap<String, String> pairsValue =  new HashMap<>();
         for (JPanel pair : pairs) {
-            String name = ((JTextField) pair.getComponent(0)).getText();
-            String value = ((JTextField) pair.getComponent(1)).getText();
-            if (!name.equals("") || !value.equals(""))
-                pairsValue.put(name, value);
+            JCheckBox checkbox = ((JCheckBox) ((JPanel) pair.getComponent(2)).getComponent(1));
+            if (checkbox.isSelected()) {
+                String name = ((JTextField) pair.getComponent(0)).getText();
+                String value = ((JTextField) pair.getComponent(1)).getText();
+                if (!name.equals("") || !value.equals(""))
+                    pairsValue.put(name, value);
+            }
         }
         return pairsValue;
     }

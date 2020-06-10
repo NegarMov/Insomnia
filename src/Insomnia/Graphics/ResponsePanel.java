@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
@@ -35,7 +36,7 @@ public class ResponsePanel extends JPanel {
      */
     public ResponsePanel(MainWindow mainWindow) {
         setBackground(Color.LIGHT_GRAY);
-        setPreferredSize(new Dimension(350, 700));
+        setPreferredSize(new Dimension(370, 700));
         setLayout(new BorderLayout());
         this.mainWindow = mainWindow;
         initiateTabs();
@@ -62,13 +63,17 @@ public class ResponsePanel extends JPanel {
      */
     public void setTheme() {
         if (mainWindow.getTheme().equals("light")) {
-            setFontAndColor(tab, headerPanel, bodyPanel, statusBar, headerTable);
+            setFontAndColor(tab, headerPanel, bodyPanel, statusBar, headerTable, headerTable.getTableHeader());
             tableScrollPane.getViewport().setBackground(Color.WHITE);
+            headerTable.getTableHeader().setOpaque(false);
+            headerTable.getTableHeader().setBackground(Color.WHITE);
             headerPanel.revalidate();
         }
         else {
-            setFontAndColor(tab, headerPanel, bodyPanel, statusBar, headerTable, tableScrollPane);
+            setFontAndColor(tab, headerPanel, bodyPanel, statusBar, headerTable, headerTable.getTableHeader());
             tableScrollPane.getViewport().setBackground(Color.DARK_GRAY);
+            headerTable.getTableHeader().setOpaque(false);
+            headerTable.getTableHeader().setBackground(Color.DARK_GRAY);
             headerPanel.revalidate();
         }
     }
@@ -109,10 +114,10 @@ public class ResponsePanel extends JPanel {
         JLabel status = new JLabel("ERROR");
         status.setOpaque(true); status.setBackground(Color.RED);
         status.setFont(new Font("Calibri", Font.PLAIN, 13));
-        status.setForeground(Color.LIGHT_GRAY);
+        status.setForeground(Color.DARK_GRAY);
         status.setHorizontalAlignment(0);
         Border border = status.getBorder();
-        Border margin = new EmptyBorder(5,10,5,10);
+        Border margin = new EmptyBorder(6,10,7,10);
         status.setBorder(new CompoundBorder(border, margin));
         statusBar.add(status);
 
@@ -164,9 +169,7 @@ public class ResponsePanel extends JPanel {
     private void headerPanel() {
         headerPanel = new JPanel();
         headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.Y_AXIS));
-        String[] columnNames = {"name", "value"};
-
-        headerTable = new JTable(new String[][]{{"Date", ""}, {"Cache-Control", ""}, {"Pragma", ""}, {"...", ""}}, columnNames);
+        headerTable = new JTable();
         headerTable.setAlignmentX(LEFT_ALIGNMENT);
         headerTable.setRowHeight(30);
         headerTable.setFillsViewportHeight(true);
@@ -175,6 +178,10 @@ public class ResponsePanel extends JPanel {
         headerPanel.add(initiateCopyButton());
     }
 
+    /**
+     * Update the headers' table according to the response's headers.
+     * @param headers The list of the response's headers.
+     */
     public void setHeaderValues(HashMap<String, String> headers) {
         String[][] headerArray = new String[headers.size()][2];
         int i = 0;
@@ -183,8 +190,10 @@ public class ResponsePanel extends JPanel {
             headerArray[i++][1] = headers.get(name);
         }
         String[] columnNames = {"name", "value"};
-        headerTable = new JTable(new String[][]{{"akjfh", ""}, {"ghjhgj-ag", ""}, {"asdf", ""}, {"...", ""}}, columnNames);
-        System.out.println("HELLO!?!?!");
+        DefaultTableModel model = new DefaultTableModel(headerArray, columnNames) {
+            public boolean isCellEditable(int row, int column) { return false; }
+        };
+        headerTable.setModel(model);
     }
 
     /**
