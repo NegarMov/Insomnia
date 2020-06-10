@@ -250,6 +250,10 @@ public class Connection implements Serializable {
         return urlString;
     }
 
+    /**
+     * Get the list of the response headers.
+     * @return A list of the response headers.
+     */
     public HashMap<String, String> getHeaders() {
         HashMap<String, String> responseHeaders = new HashMap<>();
         for (int i = 0; i < urlConnection.getHeaderFields().size(); i++)
@@ -257,11 +261,16 @@ public class Connection implements Serializable {
         return responseHeaders;
     }
 
+    /**
+     * @return True if the response is an image and false otherwise.
+     */
     public boolean isImage() {
-        System.out.println(urlConnection.getContentType());
-        return urlConnection.getContentType().contains("image");
+        return urlConnection.getContentType() != null && urlConnection.getContentType().contains("image");
     }
 
+    /**
+     * @return The response body as text.
+     */
     public String getResponseText() {
         String responseBody = "Empty";
         if (streamBytes != null)
@@ -269,6 +278,9 @@ public class Connection implements Serializable {
         return responseBody;
     }
 
+    /**
+     * @return The bytes of the response body.
+     */
     public byte[] getResponseBytes() {
         return streamBytes;
     }

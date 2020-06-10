@@ -96,7 +96,7 @@ public class RequestSettingPanel extends JPanel {
         methodsList.addItemListener(e -> mainWindow.getRequestPanel().setFocusedRequestMethod(e.getItem().toString()));
         sendPanel.add(methodsList, BorderLayout.WEST);
 
-        URL = new HintTextField("https://api.myproduct.com/v1/user");
+        URL = new HintTextField("http://apapi.haditabatabaei.ir/docs");
         URL.setPreferredSize(new Dimension(200, 40));
         sendPanel.add(URL, BorderLayout.CENTER);
 

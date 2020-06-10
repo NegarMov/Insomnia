@@ -12,6 +12,7 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 
 /**
@@ -31,8 +32,8 @@ public class ResponsePanel extends JPanel {
     private JPanel statusBar; // The status bar at the top of the response panel
     private JTable headerTable; // The table which contains the information about the headers
     private JScrollPane tableScrollPane; // The Scroll Pane which is the container of headers' table
-    private JPanel rawDataPanel;
-    private JPanel previewPanel;
+    private JPanel rawDataPanel; // The panel which is going to show the response as raw data
+    private JPanel previewPanel; // The panel which is going to show the response in case it's a picture
 
 
     /**
@@ -132,19 +133,6 @@ public class ResponsePanel extends JPanel {
         setFontAndColor(rawData, rawDataPanel);
     }
 
-    public void setRawData(String rawData) {
-        ((JTextArea) rawDataPanel.getComponent(0)).setText(rawData);
-    }
-
-    public void setPreview(byte[] response) {
-        ByteArrayInputStream stream = new ByteArrayInputStream(response);
-        try {
-            previewPanel = new ImagePanel(ImageIO.read(stream));
-        } catch (IOException e) {
-            System.err.println("Could not display image: " + e.getMessage());
-        }
-    }
-
     /**
      * Initiate the status bar at the top of this panel which contains the response's
      * 'status message' and 'status code', response duration and the volume of the
@@ -183,30 +171,31 @@ public class ResponsePanel extends JPanel {
         setFontAndColor(responseTime, dataReceived);
     }
 
-    public void editStatusBar(String statusMessage, String time, String dataReceived) {
-        JLabel status = (JLabel) statusBar.getComponent(0);
-        JLabel responseTime = (JLabel) statusBar.getComponent(1);
-        JLabel volume = (JLabel) statusBar.getComponent(2);
-        status.setText(statusMessage);
-        char c = statusMessage.charAt(0);
-        switch (c) {
-            case '2':
-                status.setBackground(Color.GREEN);
-                break;
-            case '3':
-                status.setBackground(Color.MAGENTA);
-                break;
-            case '4':
-                status.setBackground(Color.ORANGE);
-                break;
-            case '5':
-                status.setBackground(Color.RED);
-                break;
-            default:
-                status.setBackground(Color.GRAY);
-        }
-        responseTime.setText(time);
-        volume.setText(dataReceived);
+    /**
+     * Create a 'Copy To Clipboard' button which copies the contents of header
+     * table.
+     * @return The 'Copy To Clipboard' JButton.
+     */
+    private JButton initiateCopyButton() {
+        JButton copy = new JButton("Copy to Clipboard");
+        copy.setPreferredSize(new Dimension(150, 45));
+        copy.setAlignmentX(RIGHT_ALIGNMENT);
+        setFontAndColor(copy);
+        copy.addActionListener(e -> {
+            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+            StringSelection stringSelection = new StringSelection(getHeadersInfo());
+            clipboard.setContents(stringSelection, null);
+        });
+        return copy;
+    }
+
+    /**
+     * Initiate the body panel
+     */
+    private void bodyPanel() {
+        bodyPanel = new JPanel();
+        bodyPanel.setLayout(new BorderLayout());
+        bodyPanel.add(new JScrollPane(rawDataPanel));
     }
 
     /**
@@ -244,6 +233,53 @@ public class ResponsePanel extends JPanel {
         headerTable.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
     }
 
+    public void editStatusBar(String statusMessage, String time, String dataReceived) {
+        JLabel status = (JLabel) statusBar.getComponent(0);
+        JLabel responseTime = (JLabel) statusBar.getComponent(1);
+        JLabel volume = (JLabel) statusBar.getComponent(2);
+        status.setText(statusMessage);
+        char c = statusMessage.charAt(0);
+        switch (c) {
+            case '2':
+                status.setBackground(Color.GREEN);
+                break;
+            case '3':
+                status.setBackground(Color.MAGENTA);
+                break;
+            case '4':
+                status.setBackground(Color.ORANGE);
+                break;
+            case '5':
+                status.setBackground(Color.RED);
+                break;
+            default:
+                status.setBackground(Color.GRAY);
+        }
+        responseTime.setText(time);
+        volume.setText(dataReceived);
+    }
+
+    /**
+     * Set the response text shown as raw data.
+     * @param rawData The text of the response.
+     */
+    public void setRawData(String rawData) {
+        ((JTextArea) rawDataPanel.getComponent(0)).setText(rawData);
+    }
+
+    /**
+     * Set the preview of the response in case it's an image.
+     * @param response The bytes of the picture to show in preview section.
+     */
+    public void setPreview(byte[] response) {
+        ByteArrayInputStream stream = new ByteArrayInputStream(response);
+        try {
+            previewPanel = new ImagePanel(ImageIO.read(stream));
+        } catch (IOException e) {
+            System.err.println("Could not display image: " + e.getMessage());
+        }
+    }
+
     /**
      * Get all the names and values of the header table to copy t to clipboard later.
      * @return A String which contains all the headers' name and value.
@@ -258,29 +294,8 @@ public class ResponsePanel extends JPanel {
     }
 
     /**
-     * Create a 'Copy To Clipboard' button which copies the contents of header
-     * table.
-     * @return The 'Copy To Clipboard' JButton.
+     * A panel which is capable od showing pictures in it.
      */
-    private JButton initiateCopyButton() {
-        JButton copy = new JButton("Copy to Clipboard");
-        copy.setPreferredSize(new Dimension(150, 45));
-        copy.setAlignmentX(RIGHT_ALIGNMENT);
-        setFontAndColor(copy);
-        copy.addActionListener(e -> {
-            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-            StringSelection stringSelection = new StringSelection(getHeadersInfo());
-            clipboard.setContents(stringSelection, null);
-        });
-        return copy;
-    }
-
-    private void bodyPanel() {
-        bodyPanel = new JPanel();
-        bodyPanel.setLayout(new BorderLayout());
-        bodyPanel.add(new JScrollPane(rawDataPanel));
-    }
-
     private class ImagePanel extends JPanel{
 
         private BufferedImage image;

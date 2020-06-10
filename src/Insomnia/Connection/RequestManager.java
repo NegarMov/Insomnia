@@ -17,8 +17,8 @@ public class RequestManager {
 
     private static InputHandler handler; // The handler to get input from
     private static MainWindow mainWindow; // The main window to get information from in GUI part
-    private static RequestSettingPanel settingPanel;
-    private static ResponsePanel responsePanel;
+    private static RequestSettingPanel settingPanel; // The setting panel which has interaction with this manager
+    private static ResponsePanel responsePanel; // The response panel which has interaction with this manager
 
     static {
         handler = new InputHandler();
@@ -57,6 +57,10 @@ public class RequestManager {
         }
     }
 
+    /**
+     * Run a request by getting its information from the GUI part and sending the response infotmation
+     * to it.
+     */
     public static void runInGUI() {
         if (settingPanel.getURL().equals("")) {
             System.out.println("No URL found");
@@ -71,9 +75,11 @@ public class RequestManager {
         connection.printResponseInfo();
         responsePanel.setHeaderValues(connection.getHeaders());
         responsePanel.setRawData(connection.getResponseText());
-        responsePanel.setPreview(connection.getResponseBytes());
+        if (connection.isImage())
+            responsePanel.setPreview(connection.getResponseBytes());
         long elapsedTime = System.nanoTime() - startTime;
-        responsePanel.editStatusBar(connection.getResponseMessage(), String.format("%.2fs", (float) elapsedTime / 1_000_000_000.0), connection.getResponseSize());
+        responsePanel.editStatusBar(connection.getResponseMessage(), String.format("%.2fs",
+                                    (float) elapsedTime / 1_000_000_000.0), connection.getResponseSize());
         System.out.printf("\nResponse Time: %.2f second(s)\n\n", (float) elapsedTime / 1_000_000_000.0);
     }
 
@@ -127,6 +133,12 @@ public class RequestManager {
         RequestManager.responsePanel = responsePanel;
     }
 
+    /**
+     * Get query items as HashMap and add them in proper format to the end of the URL.
+     * @param url The raw url to append query items to.
+     * @param query The list of the queries to add to the url.
+     * @return The final URL with query items appended to its end.
+     */
     private static String putQueryItems(String url, HashMap<String, String> query) {
         if (query.size() !=0 ) {
             url = url.concat("?");
@@ -148,7 +160,3 @@ public class RequestManager {
         return url;
     }
 }
-
-//http://apapi.haditabatabaei.ir/tests/get/buffer/pic
-//bgcolor=rgb(100, 200, 50)
-//text=OMF IT"S WORKING
