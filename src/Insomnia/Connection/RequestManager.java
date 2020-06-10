@@ -70,6 +70,8 @@ public class RequestManager {
         connection.runConnection();
         connection.printResponseInfo();
         responsePanel.setHeaderValues(connection.getHeaders());
+        responsePanel.setRawData(connection.getResponseText());
+        responsePanel.setPreview(connection.getResponseBytes());
         long elapsedTime = System.nanoTime() - startTime;
         responsePanel.editStatusBar(connection.getResponseMessage(), String.format("%.2fs", (float) elapsedTime / 1_000_000_000.0), connection.getResponseSize());
         System.out.printf("\nResponse Time: %.2f second(s)\n\n", (float) elapsedTime / 1_000_000_000.0);
@@ -146,3 +148,7 @@ public class RequestManager {
         return url;
     }
 }
+
+//http://apapi.haditabatabaei.ir/tests/get/buffer/pic
+//bgcolor=rgb(100, 200, 50)
+//text=OMF IT"S WORKING

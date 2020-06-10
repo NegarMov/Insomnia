@@ -1,5 +1,6 @@
 package Insomnia.Graphics;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
@@ -8,6 +9,9 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -27,6 +31,8 @@ public class ResponsePanel extends JPanel {
     private JPanel statusBar; // The status bar at the top of the response panel
     private JTable headerTable; // The table which contains the information about the headers
     private JScrollPane tableScrollPane; // The Scroll Pane which is the container of headers' table
+    private JPanel rawDataPanel;
+    private JPanel previewPanel;
 
 
     /**
@@ -63,14 +69,16 @@ public class ResponsePanel extends JPanel {
      */
     public void setTheme() {
         if (mainWindow.getTheme().equals("light")) {
-            setFontAndColor(tab, headerPanel, bodyPanel, statusBar, headerTable, headerTable.getTableHeader());
+            setFontAndColor(tab, headerPanel, bodyPanel, statusBar, headerTable, rawDataPanel,
+                    headerTable.getTableHeader(), rawDataPanel.getComponent(0), previewPanel);
             tableScrollPane.getViewport().setBackground(Color.WHITE);
             headerTable.getTableHeader().setOpaque(false);
             headerTable.getTableHeader().setBackground(Color.WHITE);
             headerPanel.revalidate();
         }
         else {
-            setFontAndColor(tab, headerPanel, bodyPanel, statusBar, headerTable, headerTable.getTableHeader());
+            setFontAndColor(tab, headerPanel, bodyPanel, statusBar, headerTable, rawDataPanel,
+                    headerTable.getTableHeader(), rawDataPanel.getComponent(0), previewPanel);
             tableScrollPane.getViewport().setBackground(Color.DARK_GRAY);
             headerTable.getTableHeader().setOpaque(false);
             headerTable.getTableHeader().setBackground(Color.DARK_GRAY);
@@ -88,14 +96,53 @@ public class ResponsePanel extends JPanel {
         body.setMaximumRowCount(3);
         headerPanel();
         tab = new JTabbedPane();
+        initiatePreview();
+        initiateRawData();
         bodyPanel();
         tab.addTab("Body", bodyPanel);
         tab.setTabComponentAt(0, body);
         tab.addTab("Header", headerPanel);
 
-        setFontAndColor(tab, body);
+        body.addActionListener(e -> {
+            if (body.getSelectedIndex() == 0) {
+                bodyPanel.removeAll();
+                bodyPanel.add(new JScrollPane(rawDataPanel), BorderLayout.CENTER);
+                bodyPanel.repaint();
+            }
+            else {
+                bodyPanel.removeAll();
+                bodyPanel.add(new JScrollPane(previewPanel), BorderLayout.CENTER);
+                bodyPanel.repaint();
+            }
+        });
 
+        setFontAndColor(tab, body);
         add(tab, BorderLayout.CENTER);
+    }
+
+    private void initiatePreview() {
+        previewPanel = new JPanel();
+    }
+
+    private void initiateRawData() {
+        rawDataPanel = new JPanel();
+        JTextArea rawData = new JTextArea();
+        rawData.setEditable(false);
+        rawDataPanel.add(rawData);
+        setFontAndColor(rawData, rawDataPanel);
+    }
+
+    public void setRawData(String rawData) {
+        ((JTextArea) rawDataPanel.getComponent(0)).setText(rawData);
+    }
+
+    public void setPreview(byte[] response) {
+        ByteArrayInputStream stream = new ByteArrayInputStream(response);
+        try {
+            previewPanel = new ImagePanel(ImageIO.read(stream));
+        } catch (IOException e) {
+            System.err.println("Could not display image: " + e.getMessage());
+        }
     }
 
     /**
@@ -189,11 +236,12 @@ public class ResponsePanel extends JPanel {
             headerArray[i][0] = name;
             headerArray[i++][1] = headers.get(name);
         }
-        String[] columnNames = {"name", "value"};
+        Object[] columnNames = {"name", "value"};
         DefaultTableModel model = new DefaultTableModel(headerArray, columnNames) {
             public boolean isCellEditable(int row, int column) { return false; }
         };
         headerTable.setModel(model);
+        headerTable.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
     }
 
     /**
@@ -229,6 +277,24 @@ public class ResponsePanel extends JPanel {
 
     private void bodyPanel() {
         bodyPanel = new JPanel();
+        bodyPanel.setLayout(new BorderLayout());
+        bodyPanel.add(new JScrollPane(rawDataPanel));
+    }
+
+    private class ImagePanel extends JPanel{
+
+        private BufferedImage image;
+
+        public ImagePanel(BufferedImage image) {
+            this.image = image;
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.drawImage(image, 0, 0, this);
+        }
+
     }
 
 }

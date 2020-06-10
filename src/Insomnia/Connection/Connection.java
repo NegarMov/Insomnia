@@ -28,6 +28,7 @@ public class Connection implements Serializable {
 
     private String responseLength;
     private String responseMessage;
+    private byte[] streamBytes;
 
     /**
      * Create a new Connection/
@@ -95,7 +96,7 @@ public class Connection implements Serializable {
             else
                 connectionInputStream = urlConnection.getErrorStream();
 
-            byte[] streamBytes = StreamUtils.getStreamBytes(new BufferedInputStream(connectionInputStream));
+            streamBytes = StreamUtils.getStreamBytes(new BufferedInputStream(connectionInputStream));
 
             // Print the response body
             if (streamBytes != null) {
@@ -254,6 +255,22 @@ public class Connection implements Serializable {
         for (int i = 0; i < urlConnection.getHeaderFields().size(); i++)
             responseHeaders.put(urlConnection.getHeaderFieldKey(i), urlConnection.getHeaderField(i));
         return responseHeaders;
+    }
+
+    public boolean isImage() {
+        System.out.println(urlConnection.getContentType());
+        return urlConnection.getContentType().contains("image");
+    }
+
+    public String getResponseText() {
+        String responseBody = "Empty";
+        if (streamBytes != null)
+            responseBody = StreamUtils.getResponseBodyText(streamBytes);
+        return responseBody;
+    }
+
+    public byte[] getResponseBytes() {
+        return streamBytes;
     }
 
     /**
