@@ -131,7 +131,8 @@ public class NameValueForm extends JPanel {
         ((JTextField) newPair.getComponent(1)).setText(value);
         pairs.add(newPair);
         add(newPair);
-        add(firstPair);revalidate();
+        add(firstPair);
+        revalidate();
     }
 
     /**
@@ -157,8 +158,12 @@ public class NameValueForm extends JPanel {
      * @param defaultPairs The new pairs to be replaced with the current pairs.
      */
     public void updatePairs(HashMap<String, String> defaultPairs) {
+        removeAll();
+        pairs.clear();
         for (String name : defaultPairs.keySet())
             addNewPair(name, defaultPairs.get(name));
+        add(firstPair);
+        revalidate(); repaint();
     }
 
     /**

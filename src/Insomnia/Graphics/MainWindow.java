@@ -159,6 +159,10 @@ public class MainWindow extends JFrame {
         return requestPanel;
     }
 
+    public RequestSettingPanel getRequestSettingPanel() {
+        return requestSettingPanel;
+    }
+
     /**
      * Show the application's window.
      */

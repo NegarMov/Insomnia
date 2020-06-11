@@ -1,5 +1,7 @@
 package Insomnia.Graphics;
 
+import Insomnia.Connection.Connection;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -66,7 +68,11 @@ public class RequestPanel extends JPanel {
         addRequest.setIcon(new ImageIcon(getClass().getResource("icon/Add.png")));
         addRequest.setPreferredSize(new Dimension(250, 40));
 
-        addRequest.addActionListener(e -> new RunTimeWindows(mainWindow).newRequest(folders));
+        addRequest.addActionListener(e -> {
+            new RunTimeWindows(mainWindow).newRequest(folders);
+            mainWindow.getRequestSettingPanel().setProperties("GET", "", new HashMap<>(),
+                    new HashMap<>(), new HashMap<>(), "");
+        });
 
         add(addRequest, BorderLayout.NORTH);
     }

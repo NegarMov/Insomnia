@@ -234,11 +234,13 @@ public class RequestSettingPanel extends JPanel {
     }
 
     private void setURL(String URL) {
-        this.URL.setText(URL);
+        if (!URL.isEmpty())
+            this.URL.setText(URL);
     }
 
     private void setBinaryFilePath(String path) {
-        ((JTextField) binaryUploadPanel.getComponent(1)).setText(path);
+        if (!path.isEmpty())
+            ((JTextField) binaryUploadPanel.getComponent(1)).setText(path);
     }
 
     public void setProperties(String method, String URL, HashMap<String, String> formData,
