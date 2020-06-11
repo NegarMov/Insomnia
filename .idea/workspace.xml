@@ -3,11 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="638e28de-9cfe-4f55-9478-fa1d86451e2f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/src/Insomnia/Connection/InputHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Insomnia/Connection/InputHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Insomnia/Connection/StreamUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Insomnia/Connection/StreamUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Insomnia/Graphics/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Insomnia/Graphics/MainWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Insomnia/Graphics/NameValueForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Insomnia/Graphics/NameValueForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Insomnia/Graphics/RequestPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Insomnia/Graphics/RequestPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Insomnia/Graphics/RequestSettingPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Insomnia/Graphics/RequestSettingPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Insomnia/Graphics/ResponsePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Insomnia/Graphics/ResponsePanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Insomnia/Graphics/RunTimeWindows.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Insomnia/Graphics/RunTimeWindows.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -25,17 +22,21 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Insomnia/Graphics/MainWindow.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1156">
-              <caret line="88" column="105" selection-start-line="88" selection-start-column="105" selection-end-line="88" selection-end-column="105" />
+            <state relative-caret-position="149">
+              <caret line="269" column="37" selection-start-line="269" selection-start-column="37" selection-end-line="269" selection-end-column="37" />
               <folding>
-                <element signature="e#4243#4244#0" expanded="true" />
-                <element signature="e#4333#4334#0" expanded="true" />
-                <element signature="e#4411#4412#0" expanded="true" />
-                <element signature="e#4494#4495#0" expanded="true" />
-                <element signature="e#4735#4736#0" expanded="true" />
-                <element signature="e#4995#4996#0" expanded="true" />
-                <element signature="e#5249#5250#0" expanded="true" />
-                <element signature="e#5367#5368#0" expanded="true" />
+                <element signature="e#4324#4325#0" expanded="true" />
+                <element signature="e#4417#4418#0" expanded="true" />
+                <element signature="e#4399#4400#0" expanded="true" />
+                <element signature="e#4453#4454#0" expanded="true" />
+                <element signature="e#4612#4613#0" expanded="true" />
+                <element signature="e#4695#4696#0" expanded="true" />
+                <element signature="e#4939#4940#0" expanded="true" />
+                <element signature="e#4911#4912#0" expanded="true" />
+                <element signature="e#4955#4956#0" expanded="true" />
+                <element signature="e#5296#5297#0" expanded="true" />
+                <element signature="e#5550#5551#0" expanded="true" />
+                <element signature="e#5668#5669#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -53,17 +54,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Insomnia/Connection/StreamUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="237">
-              <caret line="126" column="5" selection-start-line="126" selection-start-column="5" selection-end-line="126" selection-end-column="5" />
+            <state relative-caret-position="54">
+              <caret line="133" column="7" lean-forward="true" selection-start-line="133" selection-start-column="7" selection-end-line="133" selection-end-column="7" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Insomnia/Graphics/RunTimeWindows.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="84">
-              <caret line="165" column="71" selection-start-line="165" selection-start-column="71" selection-end-line="165" selection-end-column="71" />
+            <state relative-caret-position="1411">
+              <caret line="87" column="59" selection-start-line="87" selection-start-column="59" selection-end-line="87" selection-end-column="59" />
             </state>
           </provider>
         </entry>
@@ -72,7 +73,7 @@
         <entry file="file://$PROJECT_DIR$/src/Insomnia/Graphics/RequestSettingPanel.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-463">
-              <caret line="226" column="29" lean-forward="true" selection-start-line="226" selection-start-column="29" selection-end-line="226" selection-end-column="29" />
+              <caret line="226" column="29" selection-start-line="226" selection-start-column="29" selection-end-line="226" selection-end-column="29" />
               <folding>
                 <element signature="e#8614#8615#0" expanded="true" />
                 <element signature="e#8665#8666#0" expanded="true" />
@@ -97,6 +98,18 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Insomnia/Connection/InputHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="5627">
+              <caret line="352" column="35" lean-forward="true" selection-start-line="352" selection-start-column="35" selection-end-line="352" selection-end-column="35" />
+              <folding>
+                <element signature="e#12957#12958#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Insomnia/Connection/ConnectionMain.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -113,7 +126,7 @@
         <entry file="file://$PROJECT_DIR$/src/Insomnia/Connection/Connection.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="3604">
-              <caret line="212" column="41" lean-forward="true" selection-start-line="212" selection-start-column="41" selection-end-line="212" selection-end-column="41" />
+              <caret line="212" column="41" selection-start-line="212" selection-start-column="41" selection-end-line="212" selection-end-column="41" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -158,15 +171,15 @@
         <option value="$PROJECT_DIR$/src/Insomnia/Graphics/ResponsePanel.java" />
         <option value="$PROJECT_DIR$/src/Insomnia/Graphics/RequestSettingPanel.java" />
         <option value="$PROJECT_DIR$/src/Insomnia/Graphics/NameValueForm.java" />
-        <option value="$PROJECT_DIR$/src/Insomnia/Graphics/MainWindow.java" />
-        <option value="$PROJECT_DIR$/src/Insomnia/Connection/InputHandler.java" />
         <option value="$PROJECT_DIR$/src/Insomnia/Graphics/RequestPanel.java" />
-        <option value="$PROJECT_DIR$/src/Insomnia/Connection/StreamUtils.java" />
+        <option value="$PROJECT_DIR$/src/Insomnia/Graphics/MainWindow.java" />
         <option value="$PROJECT_DIR$/src/Insomnia/Graphics/RunTimeWindows.java" />
+        <option value="$PROJECT_DIR$/src/Insomnia/Connection/StreamUtils.java" />
+        <option value="$PROJECT_DIR$/src/Insomnia/Connection/InputHandler.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-7" />
     <option name="width" value="697" />
     <option name="height" value="775" />
@@ -201,6 +214,13 @@
               <item name="Insomnia_3rdPhase" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="Insomnia" type="462c0819:PsiDirectoryNode" />
+              <item name="Connection" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Insomnia_3rdPhase" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Insomnia_3rdPhase" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Insomnia" type="462c0819:PsiDirectoryNode" />
               <item name="Graphics" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -215,6 +235,10 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../jURL" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -242,6 +266,7 @@
     <configuration name="jurl" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Insomnia.Connection.jurl" />
       <module name="Insomnia_3rdPhase" />
+      <option name="PROGRAM_PARAMETERS" value="http://apapi.haditabatabaei.ir/tests/post/binary --upload ./data/Output/huh.png -M POST" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="Insomnia.Connection.*" />
@@ -252,6 +277,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.jurl" />
+      <item itemvalue="Application.Main" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
@@ -273,16 +302,24 @@
       <workItem from="1591511995506" duration="10269000" />
       <workItem from="1591710311201" duration="10379000" />
       <workItem from="1591774169518" duration="16121000" />
-      <workItem from="1591881141783" duration="10638000" />
+      <workItem from="1591881141783" duration="13822000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="52858000" />
+    <option name="totallyTimeSpent" value="56042000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26096824" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -293,11 +330,11 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.67434716" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.33179724" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.5545315" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39938557" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32872504" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
@@ -419,20 +456,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Insomnia/Graphics/NameValueForm.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="134" column="5" selection-start-line="134" selection-start-column="5" selection-end-line="134" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Insomnia/Graphics/RequestSettingPanel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-463">
-          <caret line="226" column="29" lean-forward="true" selection-start-line="226" selection-start-column="29" selection-end-line="226" selection-end-column="29" />
+          <caret line="226" column="29" selection-start-line="226" selection-start-column="29" selection-end-line="226" selection-end-column="29" />
           <folding>
             <element signature="e#8614#8615#0" expanded="true" />
             <element signature="e#8665#8666#0" expanded="true" />
@@ -444,36 +471,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Insomnia/Connection/InputHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="350" column="54" selection-start-line="350" selection-start-column="54" selection-end-line="350" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Insomnia/Connection/Connection.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3604">
-          <caret line="212" column="41" lean-forward="true" selection-start-line="212" selection-start-column="41" selection-end-line="212" selection-end-column="41" />
+          <caret line="212" column="41" selection-start-line="212" selection-start-column="41" selection-end-line="212" selection-end-column="41" />
           <folding>
             <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Insomnia/Graphics/MainWindow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1156">
-          <caret line="88" column="105" selection-start-line="88" selection-start-column="105" selection-end-line="88" selection-end-column="105" />
-          <folding>
-            <element signature="e#4243#4244#0" expanded="true" />
-            <element signature="e#4333#4334#0" expanded="true" />
-            <element signature="e#4411#4412#0" expanded="true" />
-            <element signature="e#4494#4495#0" expanded="true" />
-            <element signature="e#4735#4736#0" expanded="true" />
-            <element signature="e#4995#4996#0" expanded="true" />
-            <element signature="e#5249#5250#0" expanded="true" />
-            <element signature="e#5367#5368#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -485,19 +488,137 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Insomnia/Connection/StreamUtils.java">
+    <entry file="file://$PROJECT_DIR$/src/Insomnia/Graphics/NameValueForm.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="126" column="5" selection-start-line="126" selection-start-column="5" selection-end-line="126" selection-end-column="5" />
+        <state relative-caret-position="251">
+          <caret line="134" column="5" selection-start-line="134" selection-start-column="5" selection-end-line="134" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Insomnia/Graphics/MainWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="149">
+          <caret line="269" column="37" selection-start-line="269" selection-start-column="37" selection-end-line="269" selection-end-column="37" />
+          <folding>
+            <element signature="e#4324#4325#0" expanded="true" />
+            <element signature="e#4417#4418#0" expanded="true" />
+            <element signature="e#4399#4400#0" expanded="true" />
+            <element signature="e#4453#4454#0" expanded="true" />
+            <element signature="e#4612#4613#0" expanded="true" />
+            <element signature="e#4695#4696#0" expanded="true" />
+            <element signature="e#4939#4940#0" expanded="true" />
+            <element signature="e#4911#4912#0" expanded="true" />
+            <element signature="e#4955#4956#0" expanded="true" />
+            <element signature="e#5296#5297#0" expanded="true" />
+            <element signature="e#5550#5551#0" expanded="true" />
+            <element signature="e#5668#5669#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Settings.bin">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Insomnia/Graphics/RunTimeWindows.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="165" column="71" selection-start-line="165" selection-start-column="71" selection-end-line="165" selection-end-column="71" />
+        <state relative-caret-position="1411">
+          <caret line="87" column="59" selection-start-line="87" selection-start-column="59" selection-end-line="87" selection-end-column="59" />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Insomnia/Connection/StreamUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="133" column="7" lean-forward="true" selection-start-line="133" selection-start-column="7" selection-end-line="133" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/Output/huh.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Insomnia/Connection/InputHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5627">
+          <caret line="352" column="35" lean-forward="true" selection-start-line="352" selection-start-column="35" selection-end-line="352" selection-end-column="35" />
+          <folding>
+            <element signature="e#12957#12958#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>

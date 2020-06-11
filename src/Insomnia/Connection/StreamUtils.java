@@ -1,7 +1,11 @@
 package Insomnia.Connection;
 
+import Insomnia.Graphics.MainWindow;
+
+import javax.swing.*;
 import java.io.*;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 /**
  * The class StreamUtils is a class to work with streams, write to or read from them.
@@ -12,8 +16,9 @@ import java.util.LinkedList;
  */
 public class StreamUtils {
 
-    private final static String REQUESTS_DIR = "." + File.separator + "Requests";
-    private final static String OUTPUT_DIR = "." + File.separator + "Output";
+    private final static String REQUESTS_DIR = "." + File.separator + "data" + File.separator + "Requests";
+    private final static String OUTPUT_DIR = "." + File.separator + "data" + File.separator + "Output";
+    private final static String SETTINGS_DIR = "." + File.separator + "data" + File.separator;
 
     static {
         createDirectory(REQUESTS_DIR);
@@ -124,5 +129,29 @@ public class StreamUtils {
             return true;
         System.out.println("Could not find this file path : " + filePath);
         return false;
+    }
+
+    /**
+     * Save the last settings applied on this app.
+     */
+    public static void saveSettings(MainWindow mainWindow) {
+        String content = mainWindow.followRedirects() + " " + mainWindow.isHideInTraySelected() + " "
+                + mainWindow.getTheme();
+        try (BufferedWriter output = new BufferedWriter(new FileWriter(SETTINGS_DIR + "Settings.bin"))) {
+            output.write(content);
+            output.flush();
+        } catch (IOException exception) {
+            JOptionPane.showMessageDialog(null, "Could not save user settings.",
+                    "Failed to Save File", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public static void readSettings(MainWindow mainWindow) {
+        try (FileInputStream input = new FileInputStream(SETTINGS_DIR + "Settings.bin")) {
+            Scanner scanner = new Scanner(input);
+            mainWindow.setFollowRedirects(scanner.nextBoolean());
+            mainWindow.setHideInTray(scanner.nextBoolean());
+            mainWindow.setTheme(scanner.next());
+        } catch (IOException exception) {}
     }
 }

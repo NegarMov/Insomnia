@@ -79,11 +79,13 @@ public class RunTimeWindows extends JFrame {
         // Create components of the window
         JCheckBox redirect = new JCheckBox("  Follow redirects automatically");
         redirect.setLocation(10, 20); redirect.setSize(250, 20);
-        redirect.addActionListener(e -> mainWindow.setFollowRedirects());
+        redirect.addActionListener(e -> mainWindow.switchFollowRedirects());
+        redirect.setSelected(mainWindow.followRedirects());
         JCheckBox exit = new JCheckBox("  Hide in System Tray when closed");
         exit.setLocation(10, 60); exit.setSize(250, 20);
         exit.setSelected(mainWindow.isHideInTraySelected());
-        exit.addActionListener(e -> mainWindow.setHideInTray());
+        exit.addActionListener(e -> mainWindow.switchHideInTray());
+        exit.setSelected(mainWindow.isHideInTraySelected());
         ButtonGroup theme = new ButtonGroup();
         JRadioButton lightTheme = new JRadioButton("  Light theme", true);
         lightTheme.setLocation(10, 100); lightTheme.setSize(120, 20);

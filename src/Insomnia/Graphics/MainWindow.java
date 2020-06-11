@@ -1,5 +1,7 @@
 package Insomnia.Graphics;
 
+import Insomnia.Connection.StreamUtils;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -72,6 +74,7 @@ public class MainWindow extends JFrame {
         requestPanel = new RequestPanel(this);
         requestSettingPanel = new RequestSettingPanel(this);
         responsePanel = new ResponsePanel(this);
+        StreamUtils.readSettings(this);
         setTheme(theme);
         initiateMenuBar();
         add(requestPanel, BorderLayout.WEST);
@@ -110,8 +113,12 @@ public class MainWindow extends JFrame {
         return theme;
     }
 
-    public void setFollowRedirects() {
+    public void switchFollowRedirects() {
         followRedirects = !followRedirects;
+    }
+
+    public void setFollowRedirects(boolean followRedirects) {
+        this.followRedirects = followRedirects;
     }
 
     public boolean followRedirects() {
@@ -126,8 +133,12 @@ public class MainWindow extends JFrame {
      * Change the hide in tray status. Determines if this window should be hidden in system tray
      * after pressing Quit or should exit completely
      */
-    public void setHideInTray() {
+    public void switchHideInTray() {
         hideInTray = !hideInTray;
+    }
+
+    public void setHideInTray(boolean hideInTray) {
+        this.hideInTray = hideInTray;
     }
 
     /**
@@ -256,6 +267,7 @@ public class MainWindow extends JFrame {
     private void handleExit() {
         TrayIcon icon;
         SystemTray systemTray;
+        StreamUtils.saveSettings(this);
         if (hideInTray) {
             if (SystemTray.isSupported()) {
                 systemTray = SystemTray.getSystemTray();
