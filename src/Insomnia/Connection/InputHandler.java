@@ -351,7 +351,7 @@ public class InputHandler {
      * @return A boolean which shows if the user wants to upload a binary file or not.
      */
     public boolean uploadBinary() {
-        return uploadBinary;
+        return !binaryFilePath.isEmpty();
     }
 
     /**

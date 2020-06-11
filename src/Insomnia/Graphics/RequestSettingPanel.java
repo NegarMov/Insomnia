@@ -221,6 +221,35 @@ public class RequestSettingPanel extends JPanel {
         public String getText() {
             return showingHint ? "" : super.getText();
         }
+
+        @Override
+        public void setText(String t) {
+            super.setText(t);
+            showingHint = false;
+        }
+    }
+
+    private void setMethod(String method) {
+        methodsList.setSelectedItem(method);
+    }
+
+    private void setURL(String URL) {
+        this.URL.setText(URL);
+    }
+
+    private void setBinaryFilePath(String path) {
+        ((JTextField) binaryUploadPanel.getComponent(1)).setText(path);
+    }
+
+    public void setProperties(String method, String URL, HashMap<String, String> formData,
+                              HashMap<String, String> headers, HashMap<String, String> query, String path) {
+        //TODO: USE ME INSTEAD OF THOSE STUPID ASS THINGS! please :3
+        setMethod(method);
+        setURL(URL);
+        setBinaryFilePath(path);
+        formDataPanel.updatePairs(formData);
+        headerPanel.updatePairs(headers);
+        queryPanel.updatePairs(query);
     }
 
     public String getURL() {

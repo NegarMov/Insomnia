@@ -32,7 +32,7 @@ public class ResponsePanel extends JPanel {
     private JPanel statusBar; // The status bar at the top of the response panel
     private JTable headerTable; // The table which contains the information about the headers
     private JScrollPane tableScrollPane; // The Scroll Pane which is the container of headers' table
-    private JTextArea rawDataField; // The panel which is going to show the response as raw data
+    private JTextArea rawDataField; // The text area which is going to show the response as raw data
     private JPanel previewPanel; // The panel which is going to show the response in case it's a picture
 
 
@@ -313,7 +313,5 @@ public class ResponsePanel extends JPanel {
             super.paintComponent(g);
             g.drawImage(image, 0, 0, this);
         }
-
     }
-
 }

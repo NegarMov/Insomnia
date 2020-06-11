@@ -120,6 +120,21 @@ public class NameValueForm extends JPanel {
     }
 
     /**
+     * Add a new pair with the given name and value.
+     * @param name The name of the new pair.
+     * @param value The value of the new pair.
+     */
+    private void addNewPair(String name, String value) {
+        remove(pairs.size());
+        JPanel newPair = emptyPair();
+        ((JTextField) newPair.getComponent(0)).setText(name);
+        ((JTextField) newPair.getComponent(1)).setText(value);
+        pairs.add(newPair);
+        add(newPair);
+        add(firstPair);revalidate();
+    }
+
+    /**
      * Get a HashMap of all the none-empty name values in this form.
      * @return A HashMap of all the none-empty name values in this form.
      */
@@ -135,6 +150,15 @@ public class NameValueForm extends JPanel {
             }
         }
         return pairsValue;
+    }
+
+    /**
+     * Delete all the current pairs and add new ones to it.
+     * @param defaultPairs The new pairs to be replaced with the current pairs.
+     */
+    public void updatePairs(HashMap<String, String> defaultPairs) {
+        for (String name : defaultPairs.keySet())
+            addNewPair(name, defaultPairs.get(name));
     }
 
     /**
@@ -184,6 +208,12 @@ public class NameValueForm extends JPanel {
         @Override
         public String getText() {
             return showingHint ? "" : super.getText();
+        }
+
+        @Override
+        public void setText(String t) {
+            super.setText(t);
+            showingHint = false;
         }
     }
 }

@@ -158,13 +158,23 @@ public class RunTimeWindows extends JFrame {
 
         // Set this window for the new command
         getContentPane().removeAll();
-        setSize(300, 150);
-        setLayout(null);
+        setSize(400, 280);
         setTitle("Help");
         setIconImage(new ImageIcon(getClass().getResource("icon/Help.png")).getImage());
 
         // Create components of the window
-        JLabel help = new JLabel("This is a place to write 'help' later.");
+        JTextArea help = new JTextArea("This Project is a simple HTTP client. You can create an HTTP request, send" +
+                " it for a server and see the response it sends back.\nUse the left panel to create a new request and" +
+                " after, use the middle panel to set the properties of your request. You can set its method and URL" +
+                " at the top and add additional properties like its headers, request body or query parameters from the" +
+                " panels below. You can also upload a file from 'upload binary' tab.\nIn the right panel you can see" +
+                " the response of your request. At the top you can see the request's status and below, the response body" +
+                ", preview (in case it's an image) and headers.\nUse 'option' menu to customize the program according" +
+                " to your needs.");
+        help.setMargin(new Insets(25, 10, 10, 10));
+        help.setLineWrap(true);
+        help.setWrapStyleWord(true);
+        help.setEditable(false);
         help.setSize(300, 20); help.setLocation(20, 20);
 
         // Set the components color and font and add them to this window

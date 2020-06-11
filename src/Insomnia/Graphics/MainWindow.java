@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * This class provides a GUI for the main window of this application.
@@ -76,6 +77,16 @@ public class MainWindow extends JFrame {
         add(requestPanel, BorderLayout.WEST);
         add(responsePanel, BorderLayout.EAST);
         add(requestSettingPanel, BorderLayout.CENTER);
+
+        /*HashMap<String, String> headers = new HashMap<>();
+        headers.put("H1", "N1 :3");
+        HashMap<String, String> query = new HashMap<>();
+        query.put("Q1", "P1 TT");
+        query.put("Q2", "P2 TT");
+        HashMap<String, String> formdata = new HashMap<>();
+        formdata.put("F1", "FU :3333");
+
+        requestSettingPanel.setProperties("PUT", "haha.com", formdata, headers, query, "C://haha.lol");*/
     }
 
     /**

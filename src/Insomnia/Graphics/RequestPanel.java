@@ -16,16 +16,11 @@ import java.util.HashMap;
  */
 public class RequestPanel extends JPanel {
 
-    // A list of requests
-    private ArrayList<Request> requests;
-    // A list of folders, it maps the folder name to a Folder object
-    private HashMap<String, Folder> folders;
-    // A Panel which contains all the requests of this window
-    private JPanel requestsPanel;
-    // The button(request) which is selected at the moment
-    private JButton focusedRequestButton;
-    // The main window which has interaction with this panel
-    private MainWindow mainWindow;
+    private ArrayList<Request> requests; // A list of requests
+    private HashMap<String, Folder> folders; // A list of folders, it maps the folder name to a Folder object
+    private JPanel requestsPanel; // A Panel which contains all the requests of this window
+    private JButton focusedRequestButton; // The button(request) which is selected at the moment
+    private MainWindow mainWindow; // The main window which has interaction with this panel
 
     /**
      * Create a new request panel.
