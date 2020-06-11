@@ -32,7 +32,7 @@ public class ResponsePanel extends JPanel {
     private JPanel statusBar; // The status bar at the top of the response panel
     private JTable headerTable; // The table which contains the information about the headers
     private JScrollPane tableScrollPane; // The Scroll Pane which is the container of headers' table
-    private JPanel rawDataPanel; // The panel which is going to show the response as raw data
+    private JTextArea rawDataField; // The panel which is going to show the response as raw data
     private JPanel previewPanel; // The panel which is going to show the response in case it's a picture
 
 
@@ -70,16 +70,16 @@ public class ResponsePanel extends JPanel {
      */
     public void setTheme() {
         if (mainWindow.getTheme().equals("light")) {
-            setFontAndColor(tab, headerPanel, bodyPanel, statusBar, headerTable, rawDataPanel,
-                    headerTable.getTableHeader(), rawDataPanel.getComponent(0), previewPanel);
+            setFontAndColor(tab, headerPanel, bodyPanel, statusBar, headerTable, rawDataField,
+                    headerTable.getTableHeader(), previewPanel);
             tableScrollPane.getViewport().setBackground(Color.WHITE);
             headerTable.getTableHeader().setOpaque(false);
             headerTable.getTableHeader().setBackground(Color.WHITE);
             headerPanel.revalidate();
         }
         else {
-            setFontAndColor(tab, headerPanel, bodyPanel, statusBar, headerTable, rawDataPanel,
-                    headerTable.getTableHeader(), rawDataPanel.getComponent(0), previewPanel);
+            setFontAndColor(tab, headerPanel, bodyPanel, statusBar, headerTable, rawDataField,
+                    headerTable.getTableHeader(), previewPanel);
             tableScrollPane.getViewport().setBackground(Color.DARK_GRAY);
             headerTable.getTableHeader().setOpaque(false);
             headerTable.getTableHeader().setBackground(Color.DARK_GRAY);
@@ -107,7 +107,7 @@ public class ResponsePanel extends JPanel {
         body.addActionListener(e -> {
             if (body.getSelectedIndex() == 0) {
                 bodyPanel.removeAll();
-                bodyPanel.add(new JScrollPane(rawDataPanel), BorderLayout.CENTER);
+                bodyPanel.add(new JScrollPane(rawDataField), BorderLayout.CENTER);
                 bodyPanel.repaint();
             }
             else {
@@ -126,11 +126,12 @@ public class ResponsePanel extends JPanel {
     }
 
     private void initiateRawData() {
-        rawDataPanel = new JPanel();
-        JTextArea rawData = new JTextArea();
-        rawData.setEditable(false);
-        rawDataPanel.add(rawData);
-        setFontAndColor(rawData, rawDataPanel);
+        rawDataField = new JTextArea();
+        rawDataField.setLineWrap(true);
+        rawDataField.setWrapStyleWord(true);
+        rawDataField.setEditable(false);
+        rawDataField.setMargin(new Insets(10, 10, 10, 10));
+        setFontAndColor(rawDataField);
     }
 
     /**
@@ -195,7 +196,7 @@ public class ResponsePanel extends JPanel {
     private void bodyPanel() {
         bodyPanel = new JPanel();
         bodyPanel.setLayout(new BorderLayout());
-        bodyPanel.add(new JScrollPane(rawDataPanel));
+        bodyPanel.add(new JScrollPane(rawDataField));
     }
 
     /**
@@ -253,7 +254,10 @@ public class ResponsePanel extends JPanel {
                 status.setBackground(Color.RED);
                 break;
             default:
-                status.setBackground(Color.GRAY);
+                if (statusMessage.equals("ERROR"))
+                    status.setBackground(Color.RED);
+                else
+                    status.setBackground(Color.GRAY);
         }
         responseTime.setText(time);
         volume.setText(dataReceived);
@@ -264,7 +268,7 @@ public class ResponsePanel extends JPanel {
      * @param rawData The text of the response.
      */
     public void setRawData(String rawData) {
-        ((JTextArea) rawDataPanel.getComponent(0)).setText(rawData);
+        rawDataField.setText(rawData);
     }
 
     /**

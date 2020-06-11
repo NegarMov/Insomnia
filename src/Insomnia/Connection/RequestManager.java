@@ -73,14 +73,22 @@ public class RequestManager {
         long startTime = System.nanoTime();
         connection.runConnection();
         connection.printResponseInfo();
-        responsePanel.setHeaderValues(connection.getHeaders());
-        responsePanel.setRawData(connection.getResponseText());
-        if (connection.isImage())
-            responsePanel.setPreview(connection.getResponseBytes());
-        long elapsedTime = System.nanoTime() - startTime;
-        responsePanel.editStatusBar(connection.getResponseMessage(), String.format("%.2fs",
-                                    (float) elapsedTime / 1_000_000_000.0), connection.getResponseSize());
-        System.out.printf("\nResponse Time: %.2f second(s)\n\n", (float) elapsedTime / 1_000_000_000.0);
+        if (!connection.getErrors().equals("")) {
+            responsePanel.editStatusBar("ERROR", "0.00s", "0.0B");
+            responsePanel.setRawData(connection.getErrors());
+            responsePanel.setHeaderValues(new HashMap<>());
+        }
+        else {
+            responsePanel.setHeaderValues(connection.getHeaders());
+            responsePanel.setRawData(connection.getResponseText());
+            if (connection.isImage())
+                responsePanel.setPreview(connection.getResponseBytes());
+
+            long elapsedTime = System.nanoTime() - startTime;
+            responsePanel.editStatusBar(connection.getResponseMessage(), String.format("%.2fs",
+                    (float) elapsedTime / 1_000_000_000.0), connection.getResponseSize());
+            System.out.printf("\nResponse Time: %.2f second(s)\n\n", (float) elapsedTime / 1_000_000_000.0);
+        }
     }
 
     /**

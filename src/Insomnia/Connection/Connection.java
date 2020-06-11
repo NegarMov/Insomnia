@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 /**
  * The class Connection has a http connection and sets its settings. Such as its URL, method, headers, body,
@@ -21,14 +22,14 @@ public class Connection implements Serializable {
     private String binaryFileName; // The name of the binary file to upload
     private HashMap<String, String> formData; // The list of the data parameter of this request
     private HashMap<String, String> headers; // The list of the headers of this request
-
     private String urlString; // The url of this connection
     private String method; // The method of this connection
     private boolean followRedirect; // Shows if the user wants the program to follow redirects automatically or not
-
-    private String responseLength;
-    private String responseMessage;
-    private byte[] streamBytes;
+    private String responseLength; // The length of the response in byte, kilobyte or
+    // megabyte depending on how large it is
+    private String responseMessage; // The combination of the status code and message
+    private byte[] streamBytes; // The bytes of the response
+    private LinkedList<String> errors; // A list of runtime errors which occurs during running the program
 
     /**
      * Create a new Connection/
@@ -56,6 +57,7 @@ public class Connection implements Serializable {
             this.fileName = fileName;
             this.uploadBinary = uploadBinary;
             this.binaryFileName = binaryFileName;
+            errors = new LinkedList<>();
     }
 
     /**
@@ -77,6 +79,7 @@ public class Connection implements Serializable {
                 uploadBinary();
         } catch (Exception e) {
             System.err.println("Could not connect to server: " + e.getMessage());
+            errors.add("Could not connect to server: " + e.getMessage());
         }
     }
 
@@ -135,21 +138,13 @@ public class Connection implements Serializable {
         }
     }
 
-    public String getResponseSize() {
-        return responseLength;
-    }
-
-    public String getResponseMessage() {
-        return responseMessage;
-    }
-
     /**
      * Write the request body into the requests output stream.
      * @param body The list of the body parameters.
      * @param boundary The boundary to separate the form data fields with.
      * @param bufferedOutputStream The output stream of this connection.
      */
-    public static void bufferOutFormData(HashMap<String, String> body, String boundary, BufferedOutputStream bufferedOutputStream) {
+    public void bufferOutFormData(HashMap<String, String> body, String boundary, BufferedOutputStream bufferedOutputStream) {
         try {
             for (String key : body.keySet()) {
                 bufferedOutputStream.write(("--" + boundary + "\r\n").getBytes());
@@ -176,6 +171,7 @@ public class Connection implements Serializable {
             bufferedOutputStream.close();
         } catch (IOException e) {
             System.err.println("Could not write form data: " + e.getMessage());
+            errors.add("Could not write form data: " + e.getMessage());
         }
     }
 
@@ -192,6 +188,7 @@ public class Connection implements Serializable {
             bufferOutFormData(formData, boundary, requestOutputStream);
         } catch (Exception e) {
             System.err.println("Could not write form data: " + e.getMessage());
+            errors.add("Could not write form data: " + e.getMessage());
         }
     }
 
@@ -216,6 +213,7 @@ public class Connection implements Serializable {
             bufferedOutputStream.close();
         } catch (IOException e) {
             System.err.println("Could not upload binary file: " + e.getMessage());
+           errors.add("Could not upload binary file: " + e.getMessage());
         }
     }
 
@@ -251,6 +249,20 @@ public class Connection implements Serializable {
     }
 
     /**
+     * @return The length of the response in byte, kilobyte or megabyte depending on how large it is.
+     */
+    public String getResponseSize() {
+        return responseLength;
+    }
+
+    /**
+     * @return The combination of the status code and message.
+     */
+    public String getResponseMessage() {
+        return responseMessage;
+    }
+
+    /**
      * Get the list of the response headers.
      * @return A list of the response headers.
      */
@@ -283,6 +295,16 @@ public class Connection implements Serializable {
      */
     public byte[] getResponseBytes() {
         return streamBytes;
+    }
+
+    /**
+     * @return A list of the errors which happened while communicating with the server.
+     */
+    public String getErrors() {
+        String error = "";
+        for (String e : errors)
+            error = error.concat("- " + e + "\n");
+        return error;
     }
 
     /**
