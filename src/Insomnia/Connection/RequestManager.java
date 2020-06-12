@@ -4,6 +4,7 @@ import Insomnia.Graphics.MainWindow;
 import Insomnia.Graphics.RequestSettingPanel;
 import Insomnia.Graphics.ResponsePanel;
 
+import javax.swing.*;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -63,11 +64,12 @@ public class RequestManager {
      */
     public static void runInGUI() {
         if (settingPanel.getURL().equals("")) {
-            System.out.println("No URL found");
+            JOptionPane.showMessageDialog(null, "Can't leave the URL field empty.",
+                    "No URL Found", JOptionPane.ERROR_MESSAGE);
             return;
         }
         Connection connection = mainWindow.getRequestPanel().getFocusedRequest();
-        connection.updateRequest(putQueryItems(settingPanel.getURL(), settingPanel.getQueries()),
+        connection.updateRequest(mainWindow.followRedirects(), putQueryItems(settingPanel.getURL(), settingPanel.getQueries()),
                 settingPanel.getMethod(), settingPanel.uploadBinary(), settingPanel.getBinaryFilePath(),
                 settingPanel.getFormData(), settingPanel.getHeaders(), new HashMap<>());
 

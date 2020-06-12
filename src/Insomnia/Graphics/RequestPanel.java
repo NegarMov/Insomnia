@@ -99,6 +99,8 @@ public class RequestPanel extends JPanel {
         if (!folder.equals("-"))
             folders.get(folder).newRequest(request);
         else {
+            if (!requests.isEmpty())
+                saveLastRequest();
             JButton requestButton = new JButton();
             requestButton.setLayout(new BorderLayout());
             JLabel name = new JLabel(request.getName());
@@ -110,12 +112,7 @@ public class RequestPanel extends JPanel {
             requestButton.setMaximumSize(new Dimension(getWidth(), 40));
             focusedRequestButton = requestButton;
             requestButton.addActionListener(e -> {
-                if (requests.size() > 1) {
-                    RequestSettingPanel settingPanel = mainWindow.getRequestSettingPanel();
-                    requests.get(focusedRequestButton).updateRequest(settingPanel.getURL(),
-                            settingPanel.getMethod(), settingPanel.uploadBinary(), settingPanel.getBinaryFilePath(),
-                            settingPanel.getFormData(), settingPanel.getHeaders(), settingPanel.getQueries());
-                }
+                saveLastRequest();
                 focusedRequestButton = requestButton;
                 mainWindow.getRequestSettingPanel().setProperties(request.getMethod(), request.getUrlString(),
                         request.getFormData(), request.getRequestHeaders(), request.getQuery(),
@@ -125,6 +122,13 @@ public class RequestPanel extends JPanel {
             requests.put(requestButton, request);
         }
         requestsPanel.revalidate();
+    }
+
+    public void saveLastRequest() {
+        RequestSettingPanel settingPanel = mainWindow.getRequestSettingPanel();
+        requests.get(focusedRequestButton).updateRequest(mainWindow.followRedirects(), settingPanel.getURL(),
+                settingPanel.getMethod(), settingPanel.uploadBinary(), settingPanel.getBinaryFilePath(),
+                settingPanel.getFormData(), settingPanel.getHeaders(), settingPanel.getQueries());
     }
 
     /**
@@ -150,9 +154,7 @@ public class RequestPanel extends JPanel {
     }
 
     public void setFocusedRequestMethod(String method) {
-        if (focusedRequestButton != null) {
-            //focusedRequest.setMethod(method);
+        if (focusedRequestButton != null)
             ((JLabel) focusedRequestButton.getComponent(1)).setText(method);
-        }
     }
 }

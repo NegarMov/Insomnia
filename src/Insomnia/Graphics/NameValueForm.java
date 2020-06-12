@@ -126,8 +126,10 @@ public class NameValueForm extends JPanel {
      */
     private void addNewPair(String name, String value) {
         JPanel newPair = emptyPair();
-        ((JTextField) newPair.getComponent(0)).setText(name);
-        ((JTextField) newPair.getComponent(1)).setText(value);
+        if (!name.isEmpty())
+            ((JTextField) newPair.getComponent(0)).setText(name);
+        if (!value.isEmpty())
+            ((JTextField) newPair.getComponent(1)).setText(value);
         pairs.add(newPair);
         add(newPair);
         add(firstPair);

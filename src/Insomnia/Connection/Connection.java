@@ -221,8 +221,9 @@ public class Connection implements Serializable {
         }
     }
 
-    public void updateRequest(String url, String method, boolean uploadBinary, String binaryFileName,
+    public void updateRequest(boolean followRedirect, String url, String method, boolean uploadBinary, String binaryFileName,
                        HashMap<String, String> formData, HashMap<String, String> headers, HashMap<String, String> query) {
+        this.followRedirect = followRedirect;
         this.urlString = url;
         this.method = method;
         this.binaryFileName = binaryFileName;

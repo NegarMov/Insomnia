@@ -97,7 +97,7 @@ public class ResponsePanel extends JPanel {
         body.setMaximumRowCount(3);
         headerPanel();
         tab = new JTabbedPane();
-        initiatePreview();
+        previewPanel = new JPanel();
         initiateRawData();
         bodyPanel();
         tab.addTab("Body", bodyPanel);
@@ -119,10 +119,6 @@ public class ResponsePanel extends JPanel {
 
         setFontAndColor(tab, body);
         add(tab, BorderLayout.CENTER);
-    }
-
-    private void initiatePreview() {
-        previewPanel = new JPanel();
     }
 
     private void initiateRawData() {
@@ -261,6 +257,8 @@ public class ResponsePanel extends JPanel {
         }
         responseTime.setText(time);
         volume.setText(dataReceived);
+        statusBar.revalidate();
+        statusBar.repaint();
     }
 
     /**
