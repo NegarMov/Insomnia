@@ -1,5 +1,7 @@
 package Insomnia.Graphics;
 
+import Insomnia.Connection.Connection;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ import java.util.ArrayList;
  */
 public class Folder extends JPanel {
 
-    private ArrayList<Request> requests; // The list of the requests in this folder
+    private ArrayList<Connection> requests; // The list of the requests in this folder
     private String name; // The name of the folder
     private boolean isOpen; // Determines if this folder is open now or close
     private int width; // The width of the button which represents this folder
@@ -53,7 +55,7 @@ public class Folder extends JPanel {
      * @param request The request to create the button for.
      * @return A button which represents the request.
      */
-    private JButton createRequestButton(Request request) {
+    private JButton createRequestButton(Connection request) {
         JButton requestButton = new JButton();
         requestButton.setLayout(new BorderLayout());
         JLabel name = new JLabel("\u25BA  " + request.getName());
@@ -72,7 +74,7 @@ public class Folder extends JPanel {
      * Add a new request to this folder.
      * @param request The request to add to this folder.
      */
-    public void newRequest(Request request) {
+    public void newRequest(Connection request) {
         requests.add(request);
         add(createRequestButton(request));
 
@@ -85,7 +87,7 @@ public class Folder extends JPanel {
     private void setOpen() {
         isOpen = !isOpen;
         if (isOpen)
-            for (Request request: requests)
+            for (Connection request: requests)
                 add(createRequestButton(request));
         else {
             removeAll();

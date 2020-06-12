@@ -37,10 +37,10 @@ public class RequestManager {
                     break;
                 }
                 for (int i=0; i<handler.getUrl().size(); i++) {
-                    Connection connection = new Connection(handler.getUrl().get(i), handler.getMethod(),
+                    Connection connection = new Connection("", handler.getUrl().get(i), handler.getMethod(),
                             handler.isFollowRedirect(), handler.ShowResponseHeaders(), handler.hasFileName(),
                             handler.getFileName(), handler.uploadBinary(), handler.getBinaryFilePath(),
-                            handler.getFormData(), handler.getHeaders());
+                            handler.getFormData(), handler.getHeaders(), new HashMap<>());
                     if (handler.isSaveFile())
                         StreamUtils.saveRequest(connection);
 
@@ -66,10 +66,11 @@ public class RequestManager {
             System.out.println("No URL found");
             return;
         }
-        Connection connection = new Connection(putQueryItems(settingPanel.getURL(), settingPanel.getQueries()),
-                settingPanel.getMethod(), mainWindow.followRedirects(), false, false,
-                "", settingPanel.uploadBinary(), settingPanel.getBinaryFilePath(), settingPanel.getFormData(),
-                settingPanel.getHeaders());
+        Connection connection = mainWindow.getRequestPanel().getFocusedRequest();
+        connection.updateRequest(putQueryItems(settingPanel.getURL(), settingPanel.getQueries()),
+                settingPanel.getMethod(), settingPanel.uploadBinary(), settingPanel.getBinaryFilePath(),
+                settingPanel.getFormData(), settingPanel.getHeaders(), new HashMap<>());
+
         long startTime = System.nanoTime();
         connection.runConnection();
         connection.printResponseInfo();

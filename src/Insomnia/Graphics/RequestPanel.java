@@ -18,7 +18,7 @@ import java.util.HashMap;
  */
 public class RequestPanel extends JPanel {
 
-    private ArrayList<Request> requests; // A list of requests
+    private HashMap<JButton, Connection> requests; // A list of requests
     private HashMap<String, Folder> folders; // A list of folders, it maps the folder name to a Folder object
     private JPanel requestsPanel; // A Panel which contains all the requests of this window
     private JButton focusedRequestButton; // The button(request) which is selected at the moment
@@ -31,7 +31,7 @@ public class RequestPanel extends JPanel {
     public RequestPanel(MainWindow mainWindow) {
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(250, 700));
-        requests = new ArrayList<>();
+        requests = new HashMap<>();
         folders = new HashMap<>();
         folders.put("-", new Folder("-", this));
         this.mainWindow = mainWindow;
@@ -68,11 +68,7 @@ public class RequestPanel extends JPanel {
         addRequest.setIcon(new ImageIcon(getClass().getResource("icon/Add.png")));
         addRequest.setPreferredSize(new Dimension(250, 40));
 
-        addRequest.addActionListener(e -> {
-            new RunTimeWindows(mainWindow).newRequest(folders);
-            mainWindow.getRequestSettingPanel().setProperties("GET", "", new HashMap<>(),
-                    new HashMap<>(), new HashMap<>(), "");
-        });
+        addRequest.addActionListener(e -> new RunTimeWindows(mainWindow).newRequest(folders));
 
         add(addRequest, BorderLayout.NORTH);
     }
@@ -81,17 +77,17 @@ public class RequestPanel extends JPanel {
      * Add all the requests which existed the last time the program was closed.
      */
     private void initiateRequests() {
-        for (String folder : folders.keySet()) {
+        /*for (String folder : folders.keySet()) {
             if (!folder.equals("-")) {
                 JButton folderButton = new JButton(folder);
                 requestsPanel.add(folderButton);
             }
         }
 
-        for (Request request : requests) {
+        for (Connection request : requests) {
             JButton requestButton = new JButton(request.getName() + "   " + request.getMethod());
             requestsPanel.add(requestButton);
-        }
+        }*/
     }
 
     /**
@@ -99,11 +95,10 @@ public class RequestPanel extends JPanel {
      * @param request The request to add.
      * @param folder The folder in which the request is.
      */
-    public void addRequest(Request request, String folder) {
+    public void addRequest(Connection request, String folder) {
         if (!folder.equals("-"))
             folders.get(folder).newRequest(request);
         else {
-            requests.add(request);
             JButton requestButton = new JButton();
             requestButton.setLayout(new BorderLayout());
             JLabel name = new JLabel(request.getName());
@@ -113,8 +108,21 @@ public class RequestPanel extends JPanel {
             requestButton.add(name, BorderLayout.WEST);
             requestButton.add(method, BorderLayout.EAST);
             requestButton.setMaximumSize(new Dimension(getWidth(), 40));
-            requestButton.addActionListener(e -> focusedRequestButton = requestButton);
+            focusedRequestButton = requestButton;
+            requestButton.addActionListener(e -> {
+                if (requests.size() > 1) {
+                    RequestSettingPanel settingPanel = mainWindow.getRequestSettingPanel();
+                    requests.get(focusedRequestButton).updateRequest(settingPanel.getURL(),
+                            settingPanel.getMethod(), settingPanel.uploadBinary(), settingPanel.getBinaryFilePath(),
+                            settingPanel.getFormData(), settingPanel.getHeaders(), settingPanel.getQueries());
+                }
+                focusedRequestButton = requestButton;
+                mainWindow.getRequestSettingPanel().setProperties(request.getMethod(), request.getUrlString(),
+                        request.getFormData(), request.getRequestHeaders(), request.getQuery(),
+                        request.getBinaryFileName());
+            });
             requestsPanel.add(requestButton);
+            requests.put(requestButton, request);
         }
         requestsPanel.revalidate();
     }
@@ -135,6 +143,10 @@ public class RequestPanel extends JPanel {
      */
     public void setFocusedRequest(JButton focusedRequest) {
         this.focusedRequestButton = focusedRequest;
+    }
+
+    public Connection getFocusedRequest() {
+        return requests.get(focusedRequestButton);
     }
 
     public void setFocusedRequestMethod(String method) {

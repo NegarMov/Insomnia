@@ -125,7 +125,6 @@ public class NameValueForm extends JPanel {
      * @param value The value of the new pair.
      */
     private void addNewPair(String name, String value) {
-        remove(pairs.size());
         JPanel newPair = emptyPair();
         ((JTextField) newPair.getComponent(0)).setText(name);
         ((JTextField) newPair.getComponent(1)).setText(value);

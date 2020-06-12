@@ -24,7 +24,7 @@ public class RequestSettingPanel extends JPanel {
 
     private JPanel sendPanel; // The top panel which
     private JComboBox<String> methodsList; // A box for request methods' options
-    private JTextField URL; // A field for URL
+    private HintTextField URL; // A field for URL
     private MainWindow mainWindow; // The main window which has interaction with this panel
     private JTabbedPane tab; // The tabs of the request setting panel
     private NameValueForm headerPanel; // The panel which includes the list of headers
@@ -202,6 +202,11 @@ public class RequestSettingPanel extends JPanel {
             super.addFocusListener(this);
         }
 
+        public void reset() {
+            setText(hint);
+            this.showingHint = true;
+        }
+
         @Override
         public void focusGained(FocusEvent e) {
             if (this.getText().isEmpty()) {
@@ -236,6 +241,8 @@ public class RequestSettingPanel extends JPanel {
     private void setURL(String URL) {
         if (!URL.isEmpty())
             this.URL.setText(URL);
+        else
+            this.URL.reset();
     }
 
     private void setBinaryFilePath(String path) {
@@ -245,7 +252,6 @@ public class RequestSettingPanel extends JPanel {
 
     public void setProperties(String method, String URL, HashMap<String, String> formData,
                               HashMap<String, String> headers, HashMap<String, String> query, String path) {
-        //TODO: USE ME INSTEAD OF THOSE STUPID ASS THINGS! please :3
         setMethod(method);
         setURL(URL);
         setBinaryFilePath(path);

@@ -1,5 +1,7 @@
 package Insomnia.Graphics;
 
+import Insomnia.Connection.Connection;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -281,8 +283,14 @@ public class RunTimeWindows extends JFrame {
                                 "Empty Name Field", JOptionPane.ERROR_MESSAGE);
                     else
                         if (RunTimeWindows.this.getTitle().equals("New Request")) {
-                            mainWindow.getRequestPanel().addRequest(new Request(nameField.getText(),
-                                    methodsList.getSelectedItem().toString()), foldersList.getSelectedItem().toString());
+                            mainWindow.getRequestPanel().addRequest(new Connection(nameField.getText(),
+                                            "", methodsList.getSelectedItem().toString(),
+                                            mainWindow.followRedirects(), false,
+                                            false, "", false, "",
+                                            new HashMap<>(), new HashMap<>(), new HashMap<>()),
+                                            foldersList.getSelectedItem().toString());
+                            mainWindow.getRequestSettingPanel().setProperties(methodsList.getSelectedItem().toString(),
+                                    "", new HashMap<>(), new HashMap<>(), new HashMap<>(), "");
                             dispose();
                         }
                         else {
