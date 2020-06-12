@@ -71,25 +71,15 @@ public class MainWindow extends JFrame {
         theme = "light";
         followRedirects = false;
         hideInTray = false;
-        requestPanel = new RequestPanel(this);
         requestSettingPanel = new RequestSettingPanel(this);
         responsePanel = new ResponsePanel(this);
+        requestPanel = new RequestPanel(this);
         StreamUtils.readSettings(this);
         setTheme(theme);
         initiateMenuBar();
         add(requestPanel, BorderLayout.WEST);
         add(responsePanel, BorderLayout.EAST);
         add(requestSettingPanel, BorderLayout.CENTER);
-
-        /*HashMap<String, String> headers = new HashMap<>();
-        headers.put("H1", "N1 :3");
-        HashMap<String, String> query = new HashMap<>();
-        query.put("Q1", "P1 TT");
-        query.put("Q2", "P2 TT");
-        HashMap<String, String> formdata = new HashMap<>();
-        formdata.put("F1", "FU :3333");
-
-        requestSettingPanel.setProperties("PUT", "haha.com", formdata, headers, query, "C://haha.lol");*/
     }
 
     /**
@@ -272,6 +262,7 @@ public class MainWindow extends JFrame {
         TrayIcon icon;
         SystemTray systemTray;
         StreamUtils.saveSettings(this);
+        requestPanel.saveAllRequests();
         if (hideInTray) {
             if (SystemTray.isSupported()) {
                 systemTray = SystemTray.getSystemTray();

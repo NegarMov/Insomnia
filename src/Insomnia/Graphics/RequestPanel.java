@@ -1,11 +1,13 @@
 package Insomnia.Graphics;
 
 import Insomnia.Connection.Connection;
+import Insomnia.Connection.StreamUtils;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 /**
  * This class represents the left panel on the main window which
@@ -36,8 +38,8 @@ public class RequestPanel extends JPanel {
         requestsPanel.setLayout(new BoxLayout(requestsPanel, BoxLayout.Y_AXIS));
         add(requestsPanel, BorderLayout.CENTER);
         initiateButton();
-        initiateRequests();
         setTheme();
+        LoadRequests();
     }
 
     /**
@@ -58,7 +60,7 @@ public class RequestPanel extends JPanel {
      * Create the 'Add request' button.
      */
     private void initiateButton() {
-        JButton addRequest = new JButton("             Add a new request");
+        JButton addRequest = new JButton("                   Add a new request");
         addRequest.setForeground(new Color(120, 100, 225));
         addRequest.setBackground(Color.WHITE);
         addRequest.setFont(new Font("Calibri", Font.PLAIN, 13));
@@ -73,18 +75,18 @@ public class RequestPanel extends JPanel {
     /**
      * Add all the requests which existed the last time the program was closed.
      */
-    private void initiateRequests() {
-        /*for (String folder : folders.keySet()) {
-            if (!folder.equals("-")) {
-                JButton folderButton = new JButton(folder);
-                requestsPanel.add(folderButton);
-            }
+    private void LoadRequests() {
+        setVisible(false);
+        LinkedList<Connection> savedRequests = StreamUtils.readRequests();
+        for (Connection request : savedRequests)
+            addRequest(request);
+        if (!savedRequests.isEmpty()) {
+            Connection lastRequest = savedRequests.get(savedRequests.size() - 1);
+            mainWindow.getRequestSettingPanel().setProperties(lastRequest.getMethod(),
+                    lastRequest.getUrlString(), lastRequest.getFormData(), lastRequest.getRequestHeaders(),
+                    lastRequest.getQuery(), lastRequest.getBinaryFileName());
         }
-
-        for (Connection request : requests) {
-            JButton requestButton = new JButton(request.getName() + "   " + request.getMethod());
-            requestsPanel.add(requestButton);
-        }*/
+        setVisible(true);
     }
 
     /**
@@ -102,7 +104,7 @@ public class RequestPanel extends JPanel {
         method.setForeground(new Color(120, 100, 225));
         requestButton.add(name, BorderLayout.WEST);
         requestButton.add(method, BorderLayout.EAST);
-        requestButton.setMaximumSize(new Dimension(getWidth(), 40));
+        requestButton.setMaximumSize(new Dimension(250, 40));
         focusedRequestButton = requestButton;
         requestButton.addActionListener(e -> {
             saveLastRequest();
@@ -130,5 +132,21 @@ public class RequestPanel extends JPanel {
 
     public Connection getFocusedRequest() {
         return requests.get(focusedRequestButton);
+    }
+
+    /**
+     * Save all the requests before closing the program.
+     */
+    public void saveAllRequests() {
+        saveLastRequest();
+        StreamUtils.clearDirectory();
+        for (Connection request : requests.values()) {
+            StreamUtils.saveRequest(request);
+            try {
+                Thread.sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

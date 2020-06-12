@@ -1,7 +1,6 @@
 package Insomnia.Connection;
 
 import Insomnia.Graphics.MainWindow;
-
 import javax.swing.*;
 import java.io.*;
 import java.util.LinkedList;
@@ -74,7 +73,8 @@ public class StreamUtils {
      * @param connection The connection to save into a file.
      */
     public static void saveRequest(Connection connection) {
-        try (FileOutputStream output = new FileOutputStream(REQUESTS_DIR + File.separator + "req" + System.currentTimeMillis() + ".bin")) {
+        try (FileOutputStream output = new FileOutputStream(REQUESTS_DIR + File.separator + "req" +
+                System.currentTimeMillis() + ".bin")) {
             ObjectOutputStream objectOutput = new ObjectOutputStream(output);
             objectOutput.writeObject(connection);
         } catch (IOException e) {
@@ -86,7 +86,7 @@ public class StreamUtils {
      * Read all the requests in the request directory.
      * @return A list of all the saved connections.
      */
-    public static LinkedList readRequests() {
+    public static LinkedList<Connection> readRequests() {
         LinkedList<Connection> connections = new LinkedList<>();
         File folder = new File(REQUESTS_DIR);
 
@@ -146,6 +146,10 @@ public class StreamUtils {
         }
     }
 
+    /**
+     * Read the last settings before closing the program.
+     * @param mainWindow The main window to apply the settings to.
+     */
     public static void readSettings(MainWindow mainWindow) {
         try (FileInputStream input = new FileInputStream(SETTINGS_DIR + "Settings.bin")) {
             Scanner scanner = new Scanner(input);
@@ -153,5 +157,12 @@ public class StreamUtils {
             mainWindow.setHideInTray(scanner.nextBoolean());
             mainWindow.setTheme(scanner.next());
         } catch (IOException exception) {}
+    }
+
+    public static void clearDirectory() {
+        File dir = new File(REQUESTS_DIR);
+        for(File file: dir.listFiles())
+            if (!file.isDirectory())
+                file.delete();
     }
 }

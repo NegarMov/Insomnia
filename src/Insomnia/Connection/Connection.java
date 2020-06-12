@@ -14,7 +14,7 @@ import java.util.LinkedList;
  */
 public class Connection implements Serializable {
 
-    private HttpURLConnection urlConnection; // An HttpURLConnection which is the base of this class
+    transient private HttpURLConnection urlConnection; // An HttpURLConnection which is the base of this class
     private boolean showResponseHeaders; // Determines if the use wants to see the response header or not
     private boolean saveFile; // Determines if the user wants to save the output of the request as a file or not
     private String fileName; // The name of the file to write the request output in
@@ -136,7 +136,6 @@ public class Connection implements Serializable {
                 StreamUtils.fileWriter(streamBytes, fileName);
 
             urlConnection.disconnect();
-
         } catch (Exception e) {
             System.err.println("An unexpected error occurred while communicating with server: " + e.getMessage());
         }
