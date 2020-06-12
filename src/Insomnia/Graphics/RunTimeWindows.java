@@ -23,8 +23,6 @@ public class RunTimeWindows extends JFrame {
     private JButton create; // A button which creates a new request or folder when clicked
     private JComboBox<String> methodsList; // A Combobox which has the name of the request methods and lets the user
     // to choose one of the methods
-    private HashMap<String, Folder> folders; // The list of folders in request panel
-    private JComboBox<String> foldersList; // A Combobox which contains the name of the current folders
 
     /**
      * Create a new RuntimeWindow. this window is not resizable and its
@@ -38,7 +36,6 @@ public class RunTimeWindows extends JFrame {
         this.mainWindow = mainWindow;
         create = new JButton("CREATE");
         create.addActionListener(new ButtonHandler());
-        foldersList = new JComboBox();
         nameField = new JTextField();
     }
 
@@ -192,11 +189,11 @@ public class RunTimeWindows extends JFrame {
      * A window to create a new request by asking the request's method, name and folder
      * with.
      */
-    public void newRequest(HashMap<String, Folder> folders) {
+    public void newRequest() {
 
         // Set this window for the new command
         getContentPane().removeAll();
-        setSize(600, 200);
+        setSize(550, 180);
         setLayout(null);
         setTitle("New Request");
         setIconImage(new ImageIcon(getClass().getResource("icon/Add.png")).getImage());
@@ -207,10 +204,6 @@ public class RunTimeWindows extends JFrame {
         name.setSize(100, 20); name.setLocation(20, 20);
         JLabel method = new JLabel("Method: ");
         method.setSize(100, 20); method.setLocation(430, 20);
-        JLabel folder = new JLabel("Folder: ");
-        folder.setSize(100, 20); folder.setLocation(20, 105);
-
-        this.folders = folders;
 
         // Create or initiate the components of this window
         methodsList = new JComboBox(methods);
@@ -218,54 +211,14 @@ public class RunTimeWindows extends JFrame {
         methodsList.setSize(80, 30); methodsList.setLocation(430, 47);
 
         nameField.setSize(350, 25); nameField.setLocation(20, 50);
-        nameField.setOpaque(true); nameField.setBackground(Color.LIGHT_GRAY);
 
-        foldersList = new JComboBox(folders.keySet().toArray());
-        foldersList.setMaximumRowCount(folders.size()+1);
-        foldersList.setSize(240, 30); foldersList.setLocation(80, 100);
-
-        JButton addFolder = new JButton();
-        addFolder.setIcon(new ImageIcon(getClass().getResource("icon/Folder.png")));
-        addFolder.setText("   New Folder");
-        addFolder.setSize(130, 30); addFolder.setLocation(340, 100);
-        addFolder.addActionListener(new ButtonHandler());
-
-        create.setOpaque(true); create.setBackground(new Color(120, 100, 225));
-        create.setSize(80, 30); create.setLocation(500, 100);
+        create.setSize(80, 30); create.setLocation(20, 100);
 
         // Set the components color and font and add them to this window
-        setFontAndColor(name, method, methodsList, foldersList, folder);
-        addComponents(name, nameField, method, methodsList, addFolder, foldersList, folder, create);
-
-        repaint(); setVisible(true);
-    }
-
-    /**
-     * A window for creating a new folder. It asks the folder name and adds
-     * a new folder to request panel.
-     */
-    public void newFolder() {
-
-        // Set this window for the new command
-        getContentPane().removeAll();
-        setSize(500, 150);
-        setLayout(null);
-        setTitle("New Folder");
-        setIconImage(new ImageIcon(getClass().getResource("icon/Folder.png")).getImage());
-
-        // Create or initiate the components of this window
-        JLabel name = new JLabel("Name: ");
-        name.setSize(100, 20); name.setLocation(20, 20);
-
-        nameField.setSize(350, 25); nameField.setLocation(20, 50);
-        nameField.setOpaque(true); nameField.setBackground(Color.LIGHT_GRAY);
-
+        setFontAndColor(name, method, methodsList, create, nameField);
         create.setOpaque(true); create.setBackground(new Color(120, 100, 225));
-        create.setSize(80, 30); create.setLocation(400, 47);
-
-        // Set the components color and font and add them to this window
-        setFontAndColor(name);
-        addComponents(name, nameField, create);
+        nameField.setOpaque(true); nameField.setBackground(Color.LIGHT_GRAY);
+        addComponents(name, nameField, method, methodsList, create);
 
         repaint(); setVisible(true);
     }
@@ -276,33 +229,19 @@ public class RunTimeWindows extends JFrame {
      */
     private class ButtonHandler implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            switch (event.getActionCommand()) {
-                case "CREATE":
-                    if (nameField.getText().trim().length() == 0)
-                        JOptionPane.showMessageDialog(RunTimeWindows.this, "Can't leave name field empty.",
-                                "Empty Name Field", JOptionPane.ERROR_MESSAGE);
-                    else
-                        if (RunTimeWindows.this.getTitle().equals("New Request")) {
-                            mainWindow.getRequestPanel().addRequest(new Connection(nameField.getText(),
-                                            "", methodsList.getSelectedItem().toString(),
-                                            mainWindow.followRedirects(), false,
-                                            false, "", false, "",
-                                            new HashMap<>(), new HashMap<>(), new HashMap<>()),
-                                            foldersList.getSelectedItem().toString());
-                            mainWindow.getRequestSettingPanel().setProperties(methodsList.getSelectedItem().toString(),
-                                    "", new HashMap<>(), new HashMap<>(), new HashMap<>(), "");
-                            dispose();
-                        }
-                        else {
-                            mainWindow.getRequestPanel().addFolder(nameField.getText());
-                            newRequest(folders);
-                        }
-                    break;
-                case "   New Folder":
-                    newFolder();
-                    break;
+            if (nameField.getText().trim().length() == 0)
+                JOptionPane.showMessageDialog(RunTimeWindows.this, "Can't leave name field empty.",
+                        "Empty Name Field", JOptionPane.ERROR_MESSAGE);
+            else {
+                mainWindow.getRequestPanel().addRequest(new Connection(nameField.getText(),
+                                "", methodsList.getSelectedItem().toString(),
+                                mainWindow.followRedirects(), false,
+                                false, "", false, "",
+                                new HashMap<>(), new HashMap<>(), new HashMap<>()));
+                mainWindow.getRequestSettingPanel().setProperties(methodsList.getSelectedItem().toString(),
+                        "", new HashMap<>(), new HashMap<>(), new HashMap<>(), "");
+                dispose();
             }
         }
     }
-
 }
