@@ -73,23 +73,6 @@ public class RequestPanel extends JPanel {
     }
 
     /**
-     * Add all the requests which existed the last time the program was closed.
-     */
-    private void LoadRequests() {
-        setVisible(false);
-        LinkedList<Connection> savedRequests = StreamUtils.readRequests();
-        for (Connection request : savedRequests)
-            addRequest(request, "load");
-        if (!savedRequests.isEmpty()) {
-            Connection lastRequest = savedRequests.get(savedRequests.size() - 1);
-            mainWindow.getRequestSettingPanel().setProperties(lastRequest.getMethod(),
-                    lastRequest.getUrlString(), lastRequest.getFormData(), lastRequest.getRequestHeaders(),
-                    lastRequest.getQuery(), lastRequest.getBinaryFileName());
-        }
-        setVisible(true);
-    }
-
-    /**
      * Add a new request to the requests' panel.
      * @param request The request to add.
      */
@@ -118,20 +101,14 @@ public class RequestPanel extends JPanel {
         requestsPanel.revalidate();
     }
 
+    /**
+     * Save the last selected request information.
+     */
     public void saveLastRequest() {
         RequestSettingPanel settingPanel = mainWindow.getRequestSettingPanel();
         requests.get(focusedRequestButton).updateRequest(mainWindow.followRedirects(), settingPanel.getURL(),
                 settingPanel.getMethod(), settingPanel.uploadBinary(), settingPanel.getBinaryFilePath(),
                 settingPanel.getFormData(), settingPanel.getHeaders(), settingPanel.getQueries());
-    }
-
-    public void setFocusedRequestMethod(String method) {
-        if (focusedRequestButton != null)
-            ((JLabel) focusedRequestButton.getComponent(1)).setText(method);
-    }
-
-    public Connection getFocusedRequest() {
-        return requests.get(focusedRequestButton);
     }
 
     /**
@@ -150,4 +127,38 @@ public class RequestPanel extends JPanel {
             }
         }
     }
+
+    /**
+     * Add all the requests which existed the last time the program was closed.
+     */
+    private void LoadRequests() {
+        setVisible(false);
+        LinkedList<Connection> savedRequests = StreamUtils.readRequests();
+        for (Connection request : savedRequests)
+            addRequest(request, "load");
+        if (!savedRequests.isEmpty()) {
+            Connection lastRequest = savedRequests.get(savedRequests.size() - 1);
+            mainWindow.getRequestSettingPanel().setProperties(lastRequest.getMethod(),
+                    lastRequest.getUrlString(), lastRequest.getFormData(), lastRequest.getRequestHeaders(),
+                    lastRequest.getQuery(), lastRequest.getBinaryFileName());
+        }
+        setVisible(true);
+    }
+
+    /**
+     * Set the method label of the last selected request.
+     * @param method The new method to be shown on the request button.
+     */
+    public void setFocusedRequestMethod(String method) {
+        if (focusedRequestButton != null)
+            ((JLabel) focusedRequestButton.getComponent(1)).setText(method);
+    }
+
+    /**
+     * @return The connection which has the focus on.
+     */
+    public Connection getFocusedRequest() {
+        return requests.get(focusedRequestButton);
+    }
+
 }

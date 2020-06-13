@@ -1,6 +1,4 @@
-package Insomnia;
-
-import Insomnia.Graphics.MainWindow;
+package Insomnia.Graphics;
 
 /**
  * The Main class creates a new Insomnia window and runs it.
@@ -9,7 +7,6 @@ import Insomnia.Graphics.MainWindow;
  * @since 2020.5.5
  */
 public class Main {
-
     public static void main(String[] args) {
         // Create a new Insomnia window
         MainWindow insomnia = new MainWindow();

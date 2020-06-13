@@ -121,6 +121,9 @@ public class ResponsePanel extends JPanel {
         add(tab, BorderLayout.CENTER);
     }
 
+    /**
+     * Initiate the raw data panel.
+     */
     private void initiateRawData() {
         rawDataField = new JTextArea();
         rawDataField.setLineWrap(true);
@@ -230,6 +233,12 @@ public class ResponsePanel extends JPanel {
         headerTable.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
     }
 
+    /**
+     * Edit the status bar at the top of this panel according to the given information.
+     * @param statusMessage The status message of the response.
+     * @param time The time used for the connection to be created and get the response.
+     * @param dataReceived The volume of the response.
+     */
     public void editStatusBar(String statusMessage, String time, String dataReceived) {
         JLabel status = (JLabel) statusBar.getComponent(0);
         JLabel responseTime = (JLabel) statusBar.getComponent(1);
@@ -296,7 +305,7 @@ public class ResponsePanel extends JPanel {
     }
 
     /**
-     * A panel which is capable od showing pictures in it.
+     * A panel which is capable of showing pictures in it.
      */
     private class ImagePanel extends JPanel{
 

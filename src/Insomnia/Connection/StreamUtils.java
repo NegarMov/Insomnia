@@ -159,6 +159,9 @@ public class StreamUtils {
         } catch (IOException exception) {}
     }
 
+    /**
+     * Clear request directory in order to synchronize new request with the requests saved before.
+     */
     public static void clearDirectory() {
         File dir = new File(REQUESTS_DIR);
         for(File file: dir.listFiles())

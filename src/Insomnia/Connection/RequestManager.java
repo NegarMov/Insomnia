@@ -32,8 +32,8 @@ public class RequestManager {
     public static void runInConsole() {
         String  result = handler.getInput();
         switch (result) {
-            case "new request":
-                if (handler.getUrl().size() == 0) {
+            case "new request": // Create a new request and run it
+                if (handler.getUrl().size() == 0) { // Print error in case no URL was detected
                     System.out.println("No URL found");
                     break;
                 }
@@ -52,36 +52,39 @@ public class RequestManager {
                     System.out.printf("\nResponse Time: %.2f second(s)\n\n", (float) elapsedTime / 1_000_000_000.0);
                 }
                 break;
-            case "invalid input":
+            case "invalid input": // The input was invalid; print error message
                 System.out.println("The command's syntax is not correct.");
                 break;
         }
     }
 
     /**
-     * Run a request by getting its information from the GUI part and sending the response infotmation
+     * Run a request by getting its information from the GUI part and sending the response information
      * to it.
      */
     public static void runInGUI() {
-        if (settingPanel.getURL().equals("")) {
+        if (settingPanel.getURL().equals("")) { // Print error in case no URL was detected
             JOptionPane.showMessageDialog(null, "Can't leave the URL field empty.",
                     "No URL Found", JOptionPane.ERROR_MESSAGE);
             return;
         }
+
+        // Create a new connection and update it according to the last changes on request setting panel
         Connection connection = mainWindow.getRequestPanel().getFocusedRequest();
         connection.updateRequest(mainWindow.followRedirects(), putQueryItems(settingPanel.getURL(), settingPanel.getQueries()),
                 settingPanel.getMethod(), settingPanel.uploadBinary(), settingPanel.getBinaryFilePath(),
                 settingPanel.getFormData(), settingPanel.getHeaders(), new HashMap<>());
 
+        // Run the new connection
         long startTime = System.nanoTime();
         connection.runConnection();
         connection.printResponseInfo();
-        if (!connection.getErrors().equals("")) {
+        if (!connection.getErrors().equals("")) { // The connection had some error; print the error messages
             responsePanel.editStatusBar("ERROR", "0.00s", "0.0B");
             responsePanel.setRawData(connection.getErrors());
             responsePanel.setHeaderValues(new HashMap<>());
         }
-        else {
+        else { // The connection ran successfully; print response information
             responsePanel.setHeaderValues(connection.getHeaders());
             responsePanel.setRawData(connection.getResponseText());
             if (connection.isImage())
@@ -100,7 +103,7 @@ public class RequestManager {
      */
     public static void runRequest(int requestNumber) {
         LinkedList<Connection> savedConnections = StreamUtils.readRequests();
-        if (requestNumber > savedConnections.size() || requestNumber < 1) {
+        if (requestNumber > savedConnections.size() || requestNumber < 1) { // The request does not exist; Print error
             System.err.println("There is no request with index " + requestNumber);
             return;
         }
@@ -132,16 +135,13 @@ public class RequestManager {
         handler.setArgs(args);
     }
 
+    /**
+     * @param mainWindow The main window which has interaction with this class.
+     */
     public static void setMainWindow(MainWindow mainWindow) {
         RequestManager.mainWindow = mainWindow;
-    }
-
-    public static void setSettingPanel(RequestSettingPanel settingPanel) {
-        RequestManager.settingPanel = settingPanel;
-    }
-
-    public static void setResponsePanel(ResponsePanel responsePanel) {
-        RequestManager.responsePanel = responsePanel;
+        settingPanel = mainWindow.getRequestSettingPanel();
+        responsePanel = mainWindow.getResponsePanel();
     }
 
     /**
@@ -155,12 +155,12 @@ public class RequestManager {
             url = url.concat("?");
             int counter = 0;
             for (String queryKey : query.keySet()) {
-                for (int i=0; i<queryKey.length(); i++) {
+                for (int i=0; i<queryKey.length(); i++) { // Add name
                     char c = queryKey.charAt(i);
                     url = url.concat((c == ' ')? "%20" : ("" + c));
                 }
                 url = url.concat("=");
-                for (int i=0; i<query.get(queryKey).length(); i++) {
+                for (int i=0; i<query.get(queryKey).length(); i++) { // Add value
                     char c = query.get(queryKey).charAt(i);
                     url = url.concat((c == ' ')? "%20" : ("" + c));
                 }

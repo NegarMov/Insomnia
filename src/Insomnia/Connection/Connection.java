@@ -14,7 +14,11 @@ import java.util.LinkedList;
  */
 public class Connection implements Serializable {
 
+    // Connection variables
     transient private HttpURLConnection urlConnection; // An HttpURLConnection which is the base of this class
+    private String urlString; // The url of this connection
+    private String method; // The method of this connection
+    private boolean followRedirect; // Shows if the user wants the program to follow redirects automatically or not
     private boolean showResponseHeaders; // Determines if the use wants to see the response header or not
     private boolean saveFile; // Determines if the user wants to save the output of the request as a file or not
     private String fileName; // The name of the file to write the request output in
@@ -23,15 +27,14 @@ public class Connection implements Serializable {
     private HashMap<String, String> formData; // The list of the data parameter of this request
     private HashMap<String, String> headers; // The list of the headers of this request
     private HashMap<String, String> query; // The list of the queries of this request
-    private String urlString; // The url of this connection
-    private String method; // The method of this connection
-    private boolean followRedirect; // Shows if the user wants the program to follow redirects automatically or not
+    private String name; // The name of this request
+
+    // Response variables
     transient private String responseLength; // The length of the response in byte, kilobyte or
     // megabyte depending on how large it is
     transient private String responseMessage; // The combination of the status code and message
     transient private byte[] streamBytes; // The bytes of the response
     private LinkedList<String> errors; // A list of runtime errors which occurs during running the program
-    private String name; // The name of this request
 
     /**
      * Create a new Connection/
@@ -51,8 +54,6 @@ public class Connection implements Serializable {
                       HashMap<String, String> headers, HashMap<String, String> query) {
         this.name = name;
         this.urlString = urlString;
-        this.formData = formData;
-        this.headers = headers;
         this.method = method;
         this.followRedirect = followRedirect;
         this.showResponseHeaders = showResponseHeaders;
@@ -60,6 +61,8 @@ public class Connection implements Serializable {
         this.fileName = fileName;
         this.uploadBinary = uploadBinary;
         this.binaryFileName = binaryFileName;
+        this.formData = formData;
+        this.headers = headers;
         this.query = query;
         errors = new LinkedList<>();
     }
@@ -69,6 +72,7 @@ public class Connection implements Serializable {
      */
     public void runConnection() {
         try {
+            // Open connection and set its method, body and headers
             URL url = new URL(urlString);
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setInstanceFollowRedirects(followRedirect);
@@ -77,8 +81,12 @@ public class Connection implements Serializable {
                 putFormData();
             if (headers.size() != 0)
                 putHeaders();
+
+            // Set proper name for output file
             if (fileName != null && fileName.contains("output_") && !fileName.contains("."))
                 this.fileName = fileName.concat('.' + getResponseType());
+
+            // Upload binary file
             if (uploadBinary)
                 uploadBinary();
         } catch (Exception e) {
@@ -150,7 +158,7 @@ public class Connection implements Serializable {
         try {
             for (String key : body.keySet()) {
                 bufferedOutputStream.write(("--" + boundary + "\r\n").getBytes());
-                if (key.contains("file")) {
+                if (key.contains("file")) { // In case the data is a file
                     if (!StreamUtils.isPathValid(body.get(key)))
                         System.out.println("Could not add this key to form-data");
                     bufferedOutputStream.write(("Content-Disposition: form-data; filename=\"" + (new File(body.get(key))).getName() + "\"\r\nContent-Type: Auto\r\n\r\n").getBytes());
@@ -163,7 +171,7 @@ public class Connection implements Serializable {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                } else {
+                } else { // In case the data is text
                     bufferedOutputStream.write(("Content-Disposition: form-data; name=\"" + key + "\"\r\n\r\n").getBytes());
                     bufferedOutputStream.write((body.get(key) + "\r\n").getBytes());
                 }
@@ -195,7 +203,7 @@ public class Connection implements Serializable {
     }
 
     /**
-     * Upload a binary file using POST method.
+     * Upload a binary file to the server.
      */
     public void uploadBinary() {
         try {
@@ -219,13 +227,24 @@ public class Connection implements Serializable {
         }
     }
 
+    /**
+     * Update the request by the given values.
+     * @param followRedirect The new follow redirect state.
+     * @param url The new URL of the connection.
+     * @param method The new method of the connection.
+     * @param uploadBinary The new state of uploading binary file.
+     * @param binaryFileName The new binary file path.
+     * @param formData The new list of form data of the connection.
+     * @param headers The new list of request headers of the connection.
+     * @param query The new query list of the connection.
+     */
     public void updateRequest(boolean followRedirect, String url, String method, boolean uploadBinary, String binaryFileName,
                        HashMap<String, String> formData, HashMap<String, String> headers, HashMap<String, String> query) {
         this.followRedirect = followRedirect;
         this.urlString = url;
         this.method = method;
-        this.binaryFileName = binaryFileName;
         this.uploadBinary = uploadBinary;
+        this.binaryFileName = binaryFileName;
         this.formData = formData;
         this.headers = headers;
         this.query = query;
@@ -276,24 +295,35 @@ public class Connection implements Serializable {
         return responseMessage;
     }
 
+    /**
+     * @return The name of this connection.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @return The method of this connection.
+     */
     public String getMethod() {
         return method;
     }
 
+    /**
+     * @return The list of the queries in this connection.
+     */
     public HashMap<String, String> getQuery() {
         return query;
     }
 
+    /**
+     * @return The name of the binary file uploaded via this connection.
+     */
     public String getBinaryFileName() {
         return binaryFileName;
     }
 
     /**
-     * Get the list of the response headers.
      * @return A list of the response headers.
      */
     public HashMap<String, String> getHeaders() {
@@ -305,13 +335,6 @@ public class Connection implements Serializable {
 
     public HashMap<String, String> getRequestHeaders() {
         return headers;
-    }
-
-    /**
-     * @return True if the response is an image and false otherwise.
-     */
-    public boolean isImage() {
-        return urlConnection.getContentType() != null && urlConnection.getContentType().contains("image");
     }
 
     /**
@@ -341,8 +364,18 @@ public class Connection implements Serializable {
         return error;
     }
 
+    /**
+     * @return A list of the form data of the request's body.
+     */
     public HashMap<String, String> getFormData() {
         return formData;
+    }
+
+    /**
+     * @return True if the response is an image and false otherwise.
+     */
+    public boolean isImage() {
+        return urlConnection.getContentType() != null && urlConnection.getContentType().contains("image");
     }
 
     /**

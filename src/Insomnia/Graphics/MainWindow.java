@@ -83,6 +83,13 @@ public class MainWindow extends JFrame {
     }
 
     /**
+     * Show the application's window.
+     */
+    public void showWindow() {
+        setVisible(true);
+    }
+
+    /**
      * Set the theme of this window and all its components according to user's choice.
      * It can either be 'dark' or 'light'.
      * @param theme the name of the theme to change the theme to.
@@ -93,71 +100,6 @@ public class MainWindow extends JFrame {
         requestPanel.setTheme();
         requestSettingPanel.setTheme();
         responsePanel.setTheme();
-    }
-
-    /**
-     * Get the theme of this window.
-     * @return The main theme of this window.
-     */
-    public String getTheme() {
-        return theme;
-    }
-
-    public void switchFollowRedirects() {
-        followRedirects = !followRedirects;
-    }
-
-    public void setFollowRedirects(boolean followRedirects) {
-        this.followRedirects = followRedirects;
-    }
-
-    public boolean followRedirects() {
-        return followRedirects;
-    }
-
-    public ResponsePanel getResponsePanel() {
-        return responsePanel;
-    }
-
-    /**
-     * Change the hide in tray status. Determines if this window should be hidden in system tray
-     * after pressing Quit or should exit completely
-     */
-    public void switchHideInTray() {
-        hideInTray = !hideInTray;
-    }
-
-    public void setHideInTray(boolean hideInTray) {
-        this.hideInTray = hideInTray;
-    }
-
-    /**
-     * See if the hide in tray option is selected or not.
-     * @return A boolean which is true if the window should hide in system tray
-     * and false otherwise.
-     */
-    public boolean isHideInTraySelected() {
-        return hideInTray;
-    }
-
-    /**
-     * Get the request panel of this window which is the left panel and has a list
-     * of current requests
-     * @return The request panel of the window.
-     */
-    public RequestPanel getRequestPanel() {
-        return requestPanel;
-    }
-
-    public RequestSettingPanel getRequestSettingPanel() {
-        return requestSettingPanel;
-    }
-
-    /**
-     * Show the application's window.
-     */
-    public void showWindow() {
-        setVisible(true);
     }
 
     /**
@@ -212,6 +154,80 @@ public class MainWindow extends JFrame {
 
         add(topMenuBar, BorderLayout.NORTH);
     }
+
+    /**
+     * Switch the follow redirects state.
+     */
+    public void switchFollowRedirects() {
+        followRedirects = !followRedirects;
+    }
+
+    /**
+     * @param followRedirects The new state of follow redirect.
+     */
+    public void setFollowRedirects(boolean followRedirects) {
+        this.followRedirects = followRedirects;
+    }
+
+    /**
+     * Change the hide in tray status. Determines if this window should be hidden in system tray
+     * after pressing Quit or should exit completely
+     */
+    public void switchHideInTray() {
+        hideInTray = !hideInTray;
+    }
+
+    /**
+     * @param hideInTray The new state of the hid in tray.
+     */
+    public void setHideInTray(boolean hideInTray) {
+        this.hideInTray = hideInTray;
+    }
+
+    /**
+     * @return the follow redirects state.
+     */
+    public boolean followRedirects() {
+        return followRedirects;
+    }
+
+    /**
+     * @return The main theme of this window.
+     */
+    public String getTheme() {
+        return theme;
+    }
+
+    /**
+     * @return The response panel of this window.
+     */
+    public ResponsePanel getResponsePanel() {
+        return responsePanel;
+    }
+
+    /**
+     * @return The request panel of the window.
+     */
+    public RequestPanel getRequestPanel() {
+        return requestPanel;
+    }
+
+    /**
+     * @return The request setting panel of this window.
+     */
+    public RequestSettingPanel getRequestSettingPanel() {
+        return requestSettingPanel;
+    }
+
+    /**
+     * See if the hide in tray option is selected or not.
+     * @return A boolean which is true if the window should hide in system tray
+     * and false otherwise.
+     */
+    public boolean isHideInTraySelected() {
+        return hideInTray;
+    }
+
 
     /**
      * A Class to choose what should happen when items on the menu bar at the top of the

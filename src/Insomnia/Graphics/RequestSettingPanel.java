@@ -105,7 +105,7 @@ public class RequestSettingPanel extends JPanel {
 
         JButton send = new JButton("Send");
         send.setPreferredSize(new Dimension(75, 40));
-        send.addActionListener(e -> new ConnectionMain(mainWindow, this, mainWindow.getResponsePanel()).execute());
+        send.addActionListener(e -> new ConnectionMain(mainWindow).execute());
 
         sendPanel.add(send, BorderLayout.EAST);
 
@@ -189,14 +189,89 @@ public class RequestSettingPanel extends JPanel {
     }
 
     /**
+     * update the properties of this panel.
+     * @param method The new method to be shown at the top of this panel.
+     * @param URL The URL to be shown at the top of this panel.
+     * @param formData The form data to set the form data panel values to.
+     * @param headers The headers to set the header panel values to.
+     * @param query The query items to set the query panel values to.
+     * @param path The binary file path to show in the upload binary panel.
+     */
+    public void setProperties(String method, String URL, HashMap<String, String> formData,
+                              HashMap<String, String> headers, HashMap<String, String> query, String path) {
+        methodsList.setSelectedItem(method);
+
+        if (!URL.isEmpty())
+            this.URL.setText(URL);
+        else
+            this.URL.reset();
+
+        if (!path.isEmpty())
+            ((JTextField) binaryUploadPanel.getComponent(1)).setText(path);
+
+        formDataPanel.updatePairs(formData);
+        headerPanel.updatePairs(headers);
+        queryPanel.updatePairs(query);
+    }
+
+    /**
+     * @return The URL written on this panel.
+     */
+    public String getURL() {
+        return URL.getText();
+    }
+
+    /**
+     * @return The method selected on this panel.
+     */
+    public String getMethod() {
+        return (String) methodsList.getSelectedItem();
+    }
+
+    /**
+     * @return The binary file path selected on this panel.
+     */
+    public String getBinaryFilePath() {
+        return ((JTextField) binaryUploadPanel.getComponent(1)).getText();
+    }
+
+    /**
+     * @return A boolean which shows if the user wants to upload a binary file or not.
+     */
+    public boolean uploadBinary() {
+        return !((JTextField) binaryUploadPanel.getComponent(1)).getText().equals("No file selected");
+    }
+
+    /**
+     * @return The headers written on this panel.
+     */
+    public HashMap<String, String> getHeaders() {
+        return headerPanel.getPairs();
+    }
+
+    /**
+     * @return The form data written on this panel.
+     */
+    public HashMap<String, String> getFormData() {
+        return formDataPanel.getPairs();
+    }
+
+    /**
+     * @return The query items written on this panel.
+     */
+    public HashMap<String, String> getQueries() {
+        return queryPanel.getPairs();
+    }
+
+    /**
      * This class extends JTextField so it has a hint text initially when nothing
      * is typed in it. It also manages what should happen when this text field
      * receives focus.
      */
     class HintTextField extends JTextField implements FocusListener {
 
-        private final String hint;
-        private boolean showingHint;
+        private final String hint; // The hint text shown in this field before any value is entered
+        private boolean showingHint; // Determines if the hint should be shown now or not
 
         public HintTextField(final String hint) {
             super(hint);
@@ -235,59 +310,5 @@ public class RequestSettingPanel extends JPanel {
             super.setText(t);
             showingHint = false;
         }
-    }
-
-    private void setMethod(String method) {
-        methodsList.setSelectedItem(method);
-    }
-
-    private void setURL(String URL) {
-        if (!URL.isEmpty())
-            this.URL.setText(URL);
-        else
-            this.URL.reset();
-    }
-
-    private void setBinaryFilePath(String path) {
-        if (!path.isEmpty())
-            ((JTextField) binaryUploadPanel.getComponent(1)).setText(path);
-    }
-
-    public void setProperties(String method, String URL, HashMap<String, String> formData,
-                              HashMap<String, String> headers, HashMap<String, String> query, String path) {
-        setMethod(method);
-        setURL(URL);
-        setBinaryFilePath(path);
-        formDataPanel.updatePairs(formData);
-        headerPanel.updatePairs(headers);
-        queryPanel.updatePairs(query);
-    }
-
-    public String getURL() {
-        return URL.getText();
-    }
-
-    public String getMethod() {
-        return (String) methodsList.getSelectedItem();
-    }
-
-    public String getBinaryFilePath() {
-        return ((JTextField) binaryUploadPanel.getComponent(1)).getText();
-    }
-
-    public boolean uploadBinary() {
-        return !((JTextField) binaryUploadPanel.getComponent(1)).getText().equals("No file selected");
-    }
-
-    public HashMap<String, String> getHeaders() {
-        return headerPanel.getPairs();
-    }
-
-    public HashMap<String, String> getFormData() {
-        return formDataPanel.getPairs();
-    }
-
-    public HashMap<String, String> getQueries() {
-        return queryPanel.getPairs();
     }
 }

@@ -7,12 +7,22 @@ import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * This class is a JPanel with pairs of name-value information. when the last pair is clicked,
+ * a new pair will be created under the last one.
+ *
+ * @author Negar Movaghatian
+ */
 public class NameValueForm extends JPanel {
 
     private JPanel firstPair; // First pair which is not editable, it's used to add new pair
     private MainWindow mainWindow; // The main window which has interaction with this panel
     private ArrayList<JPanel> pairs; // The least of the pair in this panel
 
+    /**
+     * Create a new Name-Value form.
+     * @param mainWindow The main window which this form is located in.
+     */
     public NameValueForm(MainWindow mainWindow) {
         this.mainWindow = mainWindow;
         pairs = new ArrayList<>();
@@ -174,8 +184,8 @@ public class NameValueForm extends JPanel {
      */
     class HintTextField extends JTextField implements FocusListener {
 
-        private final String hint;
-        private boolean showingHint;
+        private final String hint; // The hint text shown in this field before any value is entered
+        private boolean showingHint; // Determines if the hint should be shown now or not
 
         public HintTextField(final String hint) {
             super(hint);
