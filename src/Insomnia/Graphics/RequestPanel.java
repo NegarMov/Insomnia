@@ -79,7 +79,7 @@ public class RequestPanel extends JPanel {
         setVisible(false);
         LinkedList<Connection> savedRequests = StreamUtils.readRequests();
         for (Connection request : savedRequests)
-            addRequest(request);
+            addRequest(request, "load");
         if (!savedRequests.isEmpty()) {
             Connection lastRequest = savedRequests.get(savedRequests.size() - 1);
             mainWindow.getRequestSettingPanel().setProperties(lastRequest.getMethod(),
@@ -93,8 +93,8 @@ public class RequestPanel extends JPanel {
      * Add a new request to the requests' panel.
      * @param request The request to add.
      */
-    public void addRequest(Connection request) {
-        if (!requests.isEmpty())
+    public void addRequest(Connection request, String mode) {
+        if (!mode.equals("load") && !requests.isEmpty())
             saveLastRequest();
         JButton requestButton = new JButton();
         requestButton.setLayout(new BorderLayout());
@@ -138,7 +138,8 @@ public class RequestPanel extends JPanel {
      * Save all the requests before closing the program.
      */
     public void saveAllRequests() {
-        saveLastRequest();
+        if (!requests.isEmpty())
+            saveLastRequest();
         StreamUtils.clearDirectory();
         for (Connection request : requests.values()) {
             StreamUtils.saveRequest(request);

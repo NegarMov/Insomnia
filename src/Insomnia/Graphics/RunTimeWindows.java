@@ -237,7 +237,7 @@ public class RunTimeWindows extends JFrame {
                                 "", methodsList.getSelectedItem().toString(),
                                 mainWindow.followRedirects(), false,
                                 false, "", false, "",
-                                new HashMap<>(), new HashMap<>(), new HashMap<>()));
+                                new HashMap<>(), new HashMap<>(), new HashMap<>()), "new");
                 mainWindow.getRequestSettingPanel().setProperties(methodsList.getSelectedItem().toString(),
                         "", new HashMap<>(), new HashMap<>(), new HashMap<>(), "");
                 dispose();

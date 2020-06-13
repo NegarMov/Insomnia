@@ -26,10 +26,10 @@ public class Connection implements Serializable {
     private String urlString; // The url of this connection
     private String method; // The method of this connection
     private boolean followRedirect; // Shows if the user wants the program to follow redirects automatically or not
-    private String responseLength; // The length of the response in byte, kilobyte or
+    transient private String responseLength; // The length of the response in byte, kilobyte or
     // megabyte depending on how large it is
-    private String responseMessage; // The combination of the status code and message
-    private byte[] streamBytes; // The bytes of the response
+    transient private String responseMessage; // The combination of the status code and message
+    transient private byte[] streamBytes; // The bytes of the response
     private LinkedList<String> errors; // A list of runtime errors which occurs during running the program
     private String name; // The name of this request
 
@@ -134,7 +134,6 @@ public class Connection implements Serializable {
             // Save response
             if (saveFile)
                 StreamUtils.fileWriter(streamBytes, fileName);
-
             urlConnection.disconnect();
         } catch (Exception e) {
             System.err.println("An unexpected error occurred while communicating with server: " + e.getMessage());
@@ -344,30 +343,6 @@ public class Connection implements Serializable {
 
     public HashMap<String, String> getFormData() {
         return formData;
-    }
-
-    public void setUploadBinary(boolean uploadBinary) {
-        this.uploadBinary = uploadBinary;
-    }
-
-    public void setBinaryFileName(String binaryFileName) {
-        this.binaryFileName = binaryFileName;
-    }
-
-    public void setFormData(HashMap<String, String> formData) {
-        this.formData = formData;
-    }
-
-    public void setHeaders(HashMap<String, String> headers) {
-        this.headers = headers;
-    }
-
-    public void setUrlString(String urlString) {
-        this.urlString = urlString;
-    }
-
-    public void setMethod(String method) {
-        this.method = method;
     }
 
     /**

@@ -93,7 +93,10 @@ public class RequestSettingPanel extends JPanel {
         methodsList = new JComboBox(methods);
         methodsList.setMaximumRowCount(5);
         methodsList.setPreferredSize(new Dimension(75, 40));
-        methodsList.addItemListener(e -> mainWindow.getRequestPanel().setFocusedRequestMethod(e.getItem().toString()));
+        methodsList.addItemListener(e -> {
+            if (mainWindow.getRequestPanel() != null)
+                mainWindow.getRequestPanel().setFocusedRequestMethod(e.getItem().toString());
+        });
         sendPanel.add(methodsList, BorderLayout.WEST);
 
         URL = new HintTextField("http://apapi.haditabatabaei.ir/docs");
@@ -161,7 +164,7 @@ public class RequestSettingPanel extends JPanel {
 
         JTextField selectedFileField = new JTextField("No file selected");
         selectedFileField.setEditable(false);
-        selectedFileField.setSize(360, 30); selectedFileField.setLocation(10, 50);
+        selectedFileField.setSize(340, 30); selectedFileField.setLocation(10, 50);
         binaryUploadPanel.add(selectedFileField);
 
         JButton resetButton = new JButton("Reset File");
