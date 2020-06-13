@@ -34,7 +34,7 @@ public class Connection implements Serializable {
     // megabyte depending on how large it is
     transient private String responseMessage; // The combination of the status code and message
     transient private byte[] streamBytes; // The bytes of the response
-    private LinkedList<String> errors; // A list of runtime errors which occurs during running the program
+    transient private LinkedList<String> errors; // A list of runtime errors which occurs during running the program
 
     /**
      * Create a new Connection/
@@ -359,8 +359,9 @@ public class Connection implements Serializable {
      */
     public String getErrors() {
         String error = "";
-        for (String e : errors)
-            error = error.concat("- " + e + "\n");
+        if (errors != null)
+            for (String e : errors)
+                error = error.concat("- " + e + "\n");
         return error;
     }
 

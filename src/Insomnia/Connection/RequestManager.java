@@ -89,6 +89,8 @@ public class RequestManager {
             responsePanel.setRawData(connection.getResponseText());
             if (connection.isImage())
                 responsePanel.setPreview(connection.getResponseBytes());
+            else
+                responsePanel.resetPreview();
 
             long elapsedTime = System.nanoTime() - startTime;
             responsePanel.editStatusBar(connection.getResponseMessage(), String.format("%.2fs",

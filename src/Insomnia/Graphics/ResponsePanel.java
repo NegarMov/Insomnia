@@ -289,6 +289,16 @@ public class ResponsePanel extends JPanel {
         } catch (IOException e) {
             System.err.println("Could not display image: " + e.getMessage());
         }
+        previewPanel.revalidate(); previewPanel.repaint();
+    }
+
+    /**
+     * Reset the preview panel in case the response has no preview.
+     */
+    public void resetPreview() {
+        previewPanel = new JPanel();
+        previewPanel.revalidate(); previewPanel.repaint();
+        bodyPanel.revalidate(); bodyPanel.repaint();
     }
 
     /**
