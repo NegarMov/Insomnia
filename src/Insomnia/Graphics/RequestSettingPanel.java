@@ -206,7 +206,7 @@ public class RequestSettingPanel extends JPanel {
         else
             this.URL.reset();
 
-        if (!path.isEmpty())
+        if (path != null && !path.isEmpty())
             ((JTextField) binaryUploadPanel.getComponent(1)).setText(path);
 
         formDataPanel.updatePairs(formData);

@@ -268,7 +268,7 @@ public class InputHandler {
      */
     private boolean isValidArgument (String arg) {
         String[] arguments = {"-M", "--method", "-H", "--headers", "-i", "-h", "--help", "-f",
-                                "-O", "--output", "-S", "--save", "-d", "--d", "--upload"};
+                                "-O", "--output", "-S", "--save", "-d", "--data", "--upload"};
         for (String validArg : arguments)
             if (arg.equals(validArg))
                 return true;
